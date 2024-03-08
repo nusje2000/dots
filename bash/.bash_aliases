@@ -1,0 +1,10 @@
+alias dce="docker-compose exec"
+alias dcu="docker-compose up"
+alias dcl="docker-compose logs"
+alias dck="docker-compose kill"
+alias dcps="docker-compose ps"
+alias dc-reset="docker-compose up -d --force-recreate --build"
+alias workspace="dce workspace bash"
+alias ngrok-tunnel="ngrok http --domain=worthy-radically-worm.ngrok-free.app"
+alias v="nvim"
+
