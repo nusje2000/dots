@@ -33,7 +33,7 @@ function link_file() {
     TARGET=$(realpath $2)
 
     if [[ $(readlink -f "$TARGET") == "$SOURCE" ]]; then
-        success "$TARGET already points to $SOURCE"
+        success "$2 already points to $SOURCE"
 
         return 0
     fi
