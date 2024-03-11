@@ -4,6 +4,7 @@ source $(dirname "$0")/functions.sh
 
 install_if_missing "caca-utils"
 install_if_missing "ripgrep"
+install_if_missing "httpie"
 
 if [ ! -d ~/.local/share/nvim/site/pack/packer/start/packer.nvim ]; then
     loading "Installing Packer..."
