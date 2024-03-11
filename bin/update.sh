@@ -56,3 +56,7 @@ else
 fi
 
 source $(dirname "$0")/setup_links.sh
+
+loading "Running PackerSync..."
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' &> /dev/null
+success "Packer sync was successfull"
