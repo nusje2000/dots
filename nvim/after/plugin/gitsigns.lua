@@ -8,5 +8,6 @@ require('gitsigns').setup({
         vim.keymap.set('n', '<leader>hR', gs.reset_buffer)
         vim.keymap.set('n', '<leader>hp', gs.preview_hunk)
         vim.keymap.set('n', '<leader>hd', gs.toggle_deleted)
+        vim.keymap.set('n', '<leader>gb', gs.toggle_current_line_blame)
     end
 })
