@@ -1,0 +1,11 @@
+[core]
+        excludesfile = /home/maartenn/.gitignore
+        commentchar = ";"
+[user]
+        email = maarten.nusteling@gmail.com
+        name = Maarten Nusteling
+[init]
+        defaultBranch = main
+[push]
+        autoSetupRemote = true
+        default = current
