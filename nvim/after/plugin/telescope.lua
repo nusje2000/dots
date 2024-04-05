@@ -31,8 +31,17 @@ telescope.load_extension('harpoon')
 vim.keymap.set('n', '<leader>pf', all_files, {})
 vim.keymap.set('n', '<leader>gf', project_files, {})
 vim.keymap.set('n', '<leader>dd', builtin.lsp_document_symbols, {})
+vim.keymap.set('n', '<leader>gs', function()
+    builtin.grep_string({
+        search = vim.fn.input("Grep > "),
+        additional_args = { "--follow", "--hidden" }
+    });
+end)
 vim.keymap.set('n', '<leader>ps', function()
-    builtin.grep_string({ search = vim.fn.input("Grep > ") });
+    builtin.grep_string({
+        search = vim.fn.input("Grep > "),
+        additional_args  = { "--follow", "--hidden", "--no-ignore-vcs" }
+    });
 end)
 
 vim.keymap.set('n', '<leader>ha', require('harpoon.mark').add_file)
