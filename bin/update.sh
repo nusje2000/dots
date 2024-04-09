@@ -2,10 +2,32 @@ set -e
 
 source $(dirname "$0")/functions.sh
 
+install_if_missing "ninja-build"
+install_if_missing "gettext"
+install_if_missing "libtool"
+install_if_missing "libtool-bin"
+install_if_missing "autoconf"
+install_if_missing "automake"
+install_if_missing "cmake"
+install_if_missing "g++"
+install_if_missing "pkg-config"
+install_if_missing "unzip"
+install_if_missing "curl"
+install_if_missing "doxygen"
 install_if_missing "tmux"
 install_if_missing "caca-utils"
 install_if_missing "ripgrep"
 install_if_missing "httpie"
+
+if ! command -v nvim &> /dev/null; then
+    loading "cloning nvim repository..."
+    git clone https://github.com/neovim/neovim.git
+    loading "building nvim..."
+    (cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo && sudo make install)
+    success "nvim has been installed"
+else
+    success "nvim is already installed"
+fi
 
 if [ ! -d !/.tmux/plugins/tpm ]; then
     loading "Installing tpm..."

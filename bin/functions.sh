@@ -10,7 +10,7 @@ function install_if_missing() {
     if ! dpkg -s "$1" &> /dev/null;
     then
         loading "Installing $1..."
-        sudo apt-get install "$1"
+        sudo apt-get install -y "$1" &> /dev/null
         success "$1 has been installed"
     else
         success "$1 is already installed"
