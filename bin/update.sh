@@ -29,7 +29,7 @@ else
     success "nvim is already installed"
 fi
 
-if [ ! -d !/.tmux/plugins/tpm ]; then
+if [ ! -d ~/.tmux/plugins/tpm ]; then
     loading "Installing tpm..."
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
     success "tpm has been installed"
