@@ -2,9 +2,18 @@ set -e
 
 source $(dirname "$0")/functions.sh
 
+install_if_missing "tmux"
 install_if_missing "caca-utils"
 install_if_missing "ripgrep"
 install_if_missing "httpie"
+
+if [ ! -d !/.tmux/plugins/tpm ]; then
+    loading "Installing tpm..."
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    success "tpm has been installed"
+else
+    success "tpm is already installed"
+fi
 
 if [ ! -d ~/.local/share/nvim/site/pack/packer/start/packer.nvim ]; then
     loading "Installing Packer..."

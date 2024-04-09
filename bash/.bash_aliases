@@ -8,3 +8,5 @@ alias workspace="dce workspace bash"
 alias ngrok-tunnel="ngrok http --domain=worthy-radically-worm.ngrok-free.app"
 alias v="nvim"
 
+alias automotive="tmux new-session -A -s automotive -c /home/maartenn/projects/syntec/automotive"
+alias otf="tmux new-session -A -s otf -c /home/maartenn/projects/otf-shopify"
