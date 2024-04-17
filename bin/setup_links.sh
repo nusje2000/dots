@@ -1,4 +1,5 @@
 set -e
+
 source $(dirname "$0")/functions.sh
 PROJECT_ROOT=$(dirname $(dirname "$0"))
 

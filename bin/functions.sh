@@ -1,9 +1,48 @@
+RED="\e[31m"
+GREEN="\e[32m"
+PURPLE="\e[35m"
+CYAN="\e[36m"
+BLACK="\e[m"
+BG_GREEN="\e[42m"
+BG_PURPLE="\e[45m"
+BG_CYAN="\e[46m"
+BG_RED="\e[41m"
+ENDCOLOR="\e[0m"
+BAR_END="\ue0c0"
+
+function logo() {
+    LOGO=$(
+        cat "$(dirname "$0")/header.txt" |
+            sed "s/\/\+/\\\\e[35m\0\\\\e[0m/g" |
+            sed "s/#/\\\\e[94m\\\\\\\\\\\\e[0m/g"
+    )
+    printf "$LOGO\n"
+}
+
 function loading() {
-    printf "\uea9a $1\n"
+    printf "${BG_CYAN} \uea9a ${ENDCOLOR}${CYAN}${BAR_END}${ENDCOLOR}   $1\n"
 }
 
 function success() {
-    printf "\uf14a $1\n"
+    printf "${BG_GREEN} \uf14a ${ENDCOLOR}${GREEN}${BAR_END}${ENDCOLOR}   $1\n"
+}
+
+function debug() {
+    printf "${BG_PURPLE} \uf400 ${ENDCOLOR}${PURPLE}${BAR_END}${ENDCOLOR}   $1\n"
+}
+
+function header() {
+    printf "\n${BG_RED}   ${ENDCOLOR}${RED}${BAR_END}${ENDCOLOR}\n"
+    printf "${BG_RED}   ${ENDCOLOR}${RED}${BAR_END}${ENDCOLOR}   $1\n"
+    printf "${BG_RED}   ${ENDCOLOR}${RED}${BAR_END}${ENDCOLOR}\n\n"
+}
+
+function is_wsl() {
+    if [[ $(grep -i Microsoft /proc/version) ]]; then
+        return 0
+    fi
+
+    return 1
 }
 
 function install_if_missing() {
@@ -28,12 +67,20 @@ function confirm() {
    return 1 
 }
 
+function command_exists() {
+    if command -v $1 &> /dev/null; then
+        return 0
+    fi
+
+    return 1
+}
+
 function link_file() {
     SOURCE=$(realpath $1)
     TARGET=$(realpath $2)
 
     if [[ $(readlink -f "$TARGET") == "$SOURCE" ]]; then
-        success "$2 already points to $SOURCE"
+        debug "$2 already points to $SOURCE"
 
         return 0
     fi

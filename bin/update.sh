@@ -1,62 +1,62 @@
 set -e
 
-source $(dirname "$0")/functions.sh
+BIN_DIR=$(dirname "$0")
+source $BIN_DIR/functions.sh
 
-install_if_missing "ninja-build"
-install_if_missing "gettext"
-install_if_missing "libtool"
-install_if_missing "libtool-bin"
+logo
+
+exit 0
+if is_wsl; then
+    debug "Environment is using WSL"
+else
+    debug "Environment is not using WSL"
+fi
+
+header "Install apt packages"
+
 install_if_missing "autoconf"
 install_if_missing "automake"
+install_if_missing "build-essential"
+install_if_missing "ca-certificates"
+install_if_missing "caca-utils"
 install_if_missing "cmake"
-install_if_missing "g++"
-install_if_missing "pkg-config"
-install_if_missing "unzip"
+install_if_missing "coreutils"
 install_if_missing "curl"
 install_if_missing "doxygen"
-install_if_missing "tmux"
-install_if_missing "caca-utils"
-install_if_missing "ripgrep"
+install_if_missing "g++"
+install_if_missing "g++-11"
+install_if_missing "gcc-11"
+install_if_missing "gettext"
+install_if_missing "git"
 install_if_missing "httpie"
+install_if_missing "libfontconfig1-dev"
+install_if_missing "libfreetype6-dev"
+install_if_missing "libtool"
+install_if_missing "libtool-bin"
+install_if_missing "libxcb-xfixes0-dev"
+install_if_missing "libxkbcommon-dev"
+install_if_missing "lowdown"
+install_if_missing "ninja-build"
+install_if_missing "pkg-config"
+install_if_missing "python3"
+install_if_missing "ripgrep"
+install_if_missing "sed"
+install_if_missing "tmux"
+install_if_missing "unzip"
+install_if_missing "xclip"
 
-if ! command -v nvim &> /dev/null; then
-    loading "cloning nvim repository..."
-    git clone https://github.com/neovim/neovim.git
-    loading "building nvim..."
-    (cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo && sudo make install)
-    success "nvim has been installed"
+header "Install frameworks & languages"
+
+if ! command_exists rustup; then
+    loading "installing rustup..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh 
+    success "rustup has been installed"
 else
-    success "nvim is already installed"
+    success "rustup is already installed"
 fi
 
-if [ ! -d ~/.tmux/plugins/tpm ]; then
-    loading "Installing tpm..."
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    success "tpm has been installed"
-else
-    success "tpm is already installed"
-fi
 
-if [ ! -d ~/.local/share/nvim/site/pack/packer/start/packer.nvim ]; then
-    loading "Installing Packer..."
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim || exit 1
-    success "packer has been installed"
-else
-    success "packer is already installed"
-fi
-
-if [ ! -f /usr/local/bin/win32yank.exe ]; then
-    loading "Installing win32yank..."
-    curl -sLo/tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.1.1/win32yank-x64.zip
-    unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
-    chmod +x /tmp/win32yank.exe
-    sudo mv /tmp/win32yank.exe /usr/local/bin/
-    success "win32yank has been installed"
-else
-    success "win32yank is already installed"
-fi
-
-if ! command -v node &> /dev/null
+if ! command_exists node
 then
     loading "Installing node..."
     curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
@@ -74,7 +74,7 @@ if [ ! -d ~/.npm-global ]; then
     success "npm has been setup"
 fi
 
-if ! command -v n &> /dev/null
+if ! command_exists n
 then
     loading "Installing n..."
     npm install -g n
@@ -87,8 +87,31 @@ else
     success "n is already installed"
 fi
 
+header "Install applications"
+
+if [ ! -d ~/.tmux/plugins/tpm ]; then
+    loading "Installing tpm..."
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    success "tpm has been installed"
+else
+    success "tpm is already installed"
+fi
+
+if ! is_wsl; then
+    $BIN_DIR/setup_docker.sh
+    $BIN_DIR/setup_alacritty.sh
+fi
+
+$BIN_DIR/setup_btop.sh
+$BIN_DIR/setup_nvim.sh
+
+header "Setup environment"
+
 source $(dirname "$0")/setup_links.sh
 
 loading "Running PackerSync..."
 nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' &> /dev/null
 success "Packer sync was successfull"
+
+debug "Reloading bash profile"
+source ~/.profile
