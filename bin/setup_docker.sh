@@ -16,6 +16,9 @@ if [ ! -f /etc/apt/keyrings/docker.asc ]; then
       sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     sudo apt-get update
 
+    sudo usermod -aG docker $USER
+    newgrp docker
+
     success "Added docker apt repository"
 else
     success "docker apt repository was already present"
