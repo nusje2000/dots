@@ -16,6 +16,7 @@ if [ ! -f /etc/apt/keyrings/docker.asc ]; then
       sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     sudo apt-get update
 
+    getent group docker || sudo groupadd docker
     sudo usermod -aG docker $USER
     newgrp docker
 
