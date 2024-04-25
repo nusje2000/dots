@@ -14,6 +14,7 @@ fi
 header "Install apt packages"
 
 install_if_missing "autoconf"
+install_if_missing "libfuse2"
 install_if_missing "automake"
 install_if_missing "build-essential"
 install_if_missing "ca-certificates"
@@ -143,6 +144,7 @@ else
 fi
 
 if ! is_wsl; then
+    install_if_missing "kcachegrind"
     $BIN_DIR/setup_docker.sh
     $BIN_DIR/setup_alacritty.sh
 fi
