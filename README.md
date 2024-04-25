@@ -8,6 +8,20 @@ development environment.
 To update an existing environment, `bin/update.sh` can be used. This
 command will install missing applications and dependencies.
 
+### Applications that are not installed using update.sh
+
+- Google Chrome
+- Spotify
+- DataGrip
+- 1Password
+
+## Missing features
+
+- Automatically clone common projects (otf, syntec, etc.)
+- Setup public/private key using 1password CLI
+- Remove old node version if preset
+    - Remove ~/.npm-global as well
+
 # Pop!OS
 
 ## Dual Boot
