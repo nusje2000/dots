@@ -10,11 +10,13 @@ BG_RED="\e[41m"
 ENDCOLOR="\e[0m"
 BAR_END="\ue0c0"
 
+PROJECT_DIR=$(dirname $(dirname "$0"))
+
 function logo() {
     LOGO=$(
         cat "$(dirname "$0")/header.txt" |
-            sed "s/\/\+/\\\\e[35m\0\\\\e[0m/g" |
-            sed "s/#/\\\\e[94m\\\\\\\\\\\\e[0m/g"
+            sed "s/█\+/\\\\e[35m\0\\\\e[0m/g" |
+            sed "s/╱\+/\\\\e[94m\0\\\\e[0m/g"
     )
     printf "$LOGO\n"
 }
