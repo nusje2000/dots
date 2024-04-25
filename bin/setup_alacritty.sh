@@ -23,3 +23,9 @@ if ! command_exists alacritty; then
 else
     success "alacritty has already been installed"
 fi
+
+if [ ! -d "$PROJECT_DIR/alacritty/themes" ]; then
+    loading "Cloning alacritty-themes..."
+    git clone https://github.com/alacritty/alacritty-theme "$PROJECT_DIR/alacritty/themes"
+    success "alacritty-themes has been cloned"
+fi
