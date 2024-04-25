@@ -20,7 +20,15 @@ local all_files = function()
     require 'telescope.builtin'.find_files(opts)
 end
 
+local line_border = { '━', '┃', '━', '┃', '┏', '┓', '┛', '┗' }
+local thick_border = { '▀', '▐', '▄', '▌', '▛', '▜', '▟', '▙' }
 telescope.setup {
+    defaults = {
+        prompt_prefix = "   ",
+        selection_caret = " ",
+        use_less = true,
+        borderchars = thick_border,
+    },
     pickers = {
         find_files = {}
     }
