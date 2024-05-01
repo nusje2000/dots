@@ -27,7 +27,7 @@ telescope.setup {
         prompt_prefix = "   ",
         selection_caret = " ",
         use_less = true,
-        borderchars = thick_border,
+        borderchars = line_border,
     },
     pickers = {
         find_files = {}

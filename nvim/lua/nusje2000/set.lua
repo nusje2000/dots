@@ -13,6 +13,12 @@ vim.opt.hlsearch = false
 vim.opt.incsearch = true
 vim.opt.scrolloff = 8
 vim.opt.updatetime = 50
+vim.opt.listchars = {
+    space ="•"
+}
+vim.opt.fillchars = {
+    eob =" ",
+}
 
 vim.g.mapleader = " "
 vim.g.moonflyTransparent = true
