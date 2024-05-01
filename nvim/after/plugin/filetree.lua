@@ -1,8 +1,4 @@
 require("nvim-tree").setup({
-    update_focused_file = {
-        enable = true,
-        update_cwd = false,
-    },
     renderer = {
         full_name = true,
         group_empty = true,
@@ -25,6 +21,7 @@ require("nvim-tree").setup({
 })
 
 vim.keymap.set("n", "<leader>pv", vim.cmd.NvimTreeToggle)
+vim.keymap.set("n", "<leader>pp", vim.cmd.NvimTreeFindFile)
 
 local api = require("nvim-tree.api")
 local Event = api.events.Event
