@@ -1,0 +1,14 @@
+{
+    "$schema": "/home/maartenn/.local/share/nvim/mason/packages/phpactor/phpactor.schema.json",
+    "indexer.exclude_patterns": [
+        "/vendor/**/Tests/**/*",
+        "/vendor/**/tests/**/*",
+        "/var/cache/**/*",
+        "/vendor/composer/**/*"
+    ],
+    "language_server_phpstan.enabled": true,
+    "language_server_phpstan.bin": "/home/maartenn/.config/phpactor/phpstan",
+    "language_server_phpstan.level": "max",
+    "php_code_sniffer.enabled": true,
+    "php_code_sniffer.bin": "/home/maartenn/.config/phpactor/phpcs"
+}

@@ -8,7 +8,7 @@ module.exports = {
         }
 
         let rootPath = fileOrDirectory
-        while (rootPath && !fs.existsSync(path.join(rootPath, 'composer.json'))) {
+        while (rootPath !== '/' && !fs.existsSync(path.join(rootPath, 'composer.json'))) {
            rootPath = path.dirname(rootPath) 
         }
 
