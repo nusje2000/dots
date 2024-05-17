@@ -1,4 +1,5 @@
 local builtin = require('telescope.builtin')
+local themes = require('telescope.themes')
 local telescope = require('telescope')
 
 local project_files = function()
@@ -22,6 +23,7 @@ end
 
 local line_border = { '━', '┃', '━', '┃', '┏', '┓', '┛', '┗' }
 local thick_border = { '▀', '▐', '▄', '▌', '▛', '▜', '▟', '▙' }
+
 telescope.setup {
     defaults = {
         prompt_prefix = "   ",
@@ -39,6 +41,7 @@ telescope.load_extension('harpoon')
 vim.keymap.set('n', '<leader>pf', all_files, {})
 vim.keymap.set('n', '<leader>gf', project_files, {})
 vim.keymap.set('n', '<leader>dd', builtin.lsp_document_symbols, {})
+vim.keymap.set('n', '<leader>sr', function() vim.cmd('Telescope resume') end)
 vim.keymap.set('n', '<leader>gs', function()
     builtin.grep_string({
         search = vim.fn.input("Grep > "),
@@ -55,3 +58,4 @@ end)
 vim.keymap.set('n', '<leader>ha', require('harpoon.mark').add_file)
 vim.keymap.set('n', '<leader>hc', require('harpoon.mark').clear_all)
 vim.keymap.set('n', '<leader>hh', function() vim.cmd('Telescope harpoon marks') end)
+vim.keymap.set('n', '<leader>hp', function() vim.cmd('Telescope planets') end)
