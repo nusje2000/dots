@@ -8,6 +8,8 @@ lsp_zero.on_attach(function(client, bufnr)
     vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', { buffer = bufnr })
 end)
 
+local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {
@@ -19,6 +21,26 @@ require('mason-lspconfig').setup({
     },
     handlers = {
         lsp_zero.default_setup,
+        lua_ls = function()
+            lspconfig.lua_ls.setup({
+                capabilities = lsp_capabilities,
+                settings = {
+                    Lua = {
+                        runtime = {
+                            version = 'LuaJIT',
+                        },
+                        diagnostics = {
+                            globals = { 'vim' }
+                        },
+                        workspace = {
+                            library = {
+                                vim.env.VIMRUNTIME,
+                            }
+                        }
+                    }
+                }
+            })
+        end,
     },
 })
 
@@ -32,10 +54,10 @@ lsp_zero.set_sign_icons({
 })
 
 local diagnostic_prefixes = {
-  [vim.diagnostic.severity.ERROR] = '✘',
-  [vim.diagnostic.severity.WARN] = '',
-  [vim.diagnostic.severity.HINT] = '󰟶',
-  default = '»',
+    [vim.diagnostic.severity.ERROR] = '✘',
+    [vim.diagnostic.severity.WARN] = '',
+    [vim.diagnostic.severity.HINT] = '󰟶',
+    default = '»',
 }
 
 vim.diagnostic.config({
