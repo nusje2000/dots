@@ -1,7 +1,10 @@
-set -e
+#!/usr/bin/env bash
 
-BIN_DIR=$(dirname "$0")
-source $BIN_DIR/functions.sh
+if [[ $* == *-y* ]]; then
+    DISABLE_INTERACTION=true
+fi
+
+source "$(dirname $0)/functions.sh"
 
 logo
 
@@ -47,70 +50,16 @@ install_if_missing "xclip"
 
 header "Install frameworks & languages"
 
-if ! command_exists rustup; then
-    loading "installing rustup..."
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh 
-    success "rustup has been installed"
-else
-    success "rustup is already installed"
-fi
-
+source $(dirname "$0")/setup_git.sh
+source $(dirname "$0")/setup_rust.sh
+source $(dirname "$0")/setup_bash.sh
+source $(dirname "$0")/setup_ngrok.sh
 source $(dirname "$0")/setup_php.sh
-
-if ! command_exists node
-then
-    loading "Installing node..."
-    curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-    sudo apt-get install -y nodejs
-    source ~/.bashrc
-    success "node has been installed"
-else
-    success "node is already installed"
-fi
-
-if [ ! -d ~/.npm-global ]; then
-    loading "setting up npm..."
-    mkdir ~/.npm-global
-    npm config set prefix '~/.npm-global'
-    success "npm has been setup"
-fi
-
-if ! command_exists n
-then
-    loading "Installing n..."
-    npm install -g n
-    sudo mkdir -p /usr/local/n
-    sudo chown -R $(whoami) /usr/local/n
-    sudo mkdir -p /usr/local/bin /usr/local/lib /usr/local/include /usr/local/share
-    sudo chown -R $(whoami) /usr/local/bin /usr/local/lib /usr/local/include /usr/local/share
-    success "n has been installed"
-else
-    success "n is already installed"
-fi
-
-if ! command_exists ngrok
-then
-    loading "installing ngrok"
-
-    curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
-    echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
-    sudo apt update
-    sudo apt install ngrok
-
-    success "ngrok has been installed"
-else
-    success "ngrok is already installed"
-fi
+source $(dirname "$0")/setup_node.sh
 
 header "Install applications"
 
-if [ ! -d ~/.tmux/plugins/tpm ]; then
-    loading "Installing tpm..."
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    success "tpm has been installed"
-else
-    success "tpm is already installed"
-fi
+source $(dirname "$0")/setup_tmux.sh
 
 if ! is_wsl; then
     install_if_missing "kcachegrind"
@@ -122,8 +71,6 @@ $BIN_DIR/setup_btop.sh
 $BIN_DIR/setup_nvim.sh
 
 header "Setup environment"
-
-source $(dirname "$0")/setup_links.sh
 
 loading "Running PackerSync..."
 nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' &> /dev/null

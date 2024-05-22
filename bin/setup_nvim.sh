@@ -1,5 +1,4 @@
-set -e
-
+#!/usr/bin/env bash
 source $(dirname "$0")/functions.sh
 
 if ! is_wsl; then
@@ -34,3 +33,5 @@ else
     success "packer is already installed"
 fi
 
+link_file "$PROJECT_DIR/nvim" "$HOME/.config/nvim"
+link_file "$PROJECT_DIR/phpactor" "$HOME/.config/phpactor"

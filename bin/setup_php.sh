@@ -1,5 +1,4 @@
-set -e
-
+#!/usr/bin/env bash
 source $(dirname "$0")/functions.sh
 
 if ! command_exists php; then
@@ -58,3 +57,5 @@ if [ ! -e "$PHPSTAN" ]; then
     chmod a+x "$PHPSTAN"
     success "phpstan has been installed"
 fi
+
+link_file "$PROJECT_DIR/phpactor" "$HOME/.config/phpactor"

@@ -1,5 +1,4 @@
-set -e
-
+#!/usr/bin/env bash
 source $(dirname "$0")/functions.sh
 
 if [ ! -f /etc/apt/keyrings/docker.asc ]; then

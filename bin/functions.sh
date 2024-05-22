@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+set -e
+
 RED="\e[31m"
 GREEN="\e[32m"
 PURPLE="\e[35m"
@@ -10,7 +13,8 @@ BG_RED="\e[41m"
 ENDCOLOR="\e[0m"
 BAR_END="\ue0c0"
 
-PROJECT_DIR=$(dirname $(dirname "$0"))
+PROJECT_DIR=$(realpath $(dirname $(dirname "$0")))
+BIN_DIR="$PROJECT_DIR/bin"
 
 function logo() {
     LOGO=$(
@@ -59,6 +63,10 @@ function install_if_missing() {
 }
 
 function confirm() {
+    if [ ${DISABLE_INTERACTION:-false} = true ]; then
+        return 0
+    fi
+
     read -p "$1 [y/N] " -n 1 -r
     echo
 
@@ -97,7 +105,7 @@ function link_file() {
         rm -rf $TARGET
     fi
 
-    ln -s $SOURCE $TARGET
+    sudo ln -s $SOURCE $TARGET
 
     success "Created link from $TARGET to $SOURCE"
 }

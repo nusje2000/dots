@@ -1,5 +1,4 @@
-set -e
-
+#!/usr/bin/env bash
 source $(dirname "$0")/functions.sh
 
 if ! command_exists btop; then

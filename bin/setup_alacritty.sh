@@ -1,5 +1,4 @@
-set -e
-
+#!/usr/bin/env bash
 source $(dirname "$0")/functions.sh
 
 if ! command_exists alacritty; then
@@ -29,3 +28,5 @@ if [ ! -d "$PROJECT_DIR/alacritty/themes" ]; then
     git clone https://github.com/alacritty/alacritty-theme "$PROJECT_DIR/alacritty/themes"
     success "alacritty-themes has been cloned"
 fi
+
+link_file "$PROJECT_DIR/alacritty" "$HOME/.config/alacritty"
