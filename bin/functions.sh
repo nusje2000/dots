@@ -16,6 +16,17 @@ BAR_END="\ue0c0"
 PROJECT_DIR=$(realpath $(dirname $(dirname "$0")))
 BIN_DIR="$PROJECT_DIR/bin"
 
+DISABLE_INTERACTION=false
+if [[ $* == *-y* ]]; then
+    DISABLE_INTERACTION=true
+fi
+
+VERBOSE=false
+if [[ $* == *-v* ]]; then
+    VERBOSE=true
+fi
+
+
 function logo() {
     LOGO=$(
         cat "$(dirname "$0")/header.txt" |
@@ -55,7 +66,13 @@ function install_if_missing() {
     if ! dpkg -s "$1" &> /dev/null;
     then
         loading "Installing $1..."
-        sudo apt-get install -y "$1" &> /dev/null
+        
+        if [ $VERBOSE = true ]; then
+            sudo apt-get install -y "$1"
+        else
+            sudo apt-get install -y "$1" &> /dev/null
+        fi
+
         success "$1 has been installed"
     else
         success "$1 is already installed"
@@ -63,7 +80,7 @@ function install_if_missing() {
 }
 
 function confirm() {
-    if [ ${DISABLE_INTERACTION:-false} = true ]; then
+    if [ $DISABLE_INTERACTION = true ]; then
         return 0
     fi
 

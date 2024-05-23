@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-if [[ $* == *-y* ]]; then
-    DISABLE_INTERACTION=true
-fi
-
 source "$(dirname $0)/functions.sh"
 
 logo
@@ -16,6 +12,7 @@ fi
 
 header "Install apt packages"
 
+install_if_missing "software-properties-common"
 install_if_missing "autoconf"
 install_if_missing "libfuse2"
 install_if_missing "automake"

@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 source $(dirname "$0")/functions.sh
 
-if ! command_exists php; then
-    loading "Installing php..."
+if ! grep  -r ^deb.*ondrej/php /etc/apt; then
+    loading "Installing up php repository..."
 
     sudo add-apt-repository ppa:ondrej/php -y
     sudo apt update
 
-
-    success "php has been installed"
+    success "Installed php repository"
 else
-    success "php is already installed"
+    success "php repository is already installed"
 fi
 
 install_if_missing "php8.3"
