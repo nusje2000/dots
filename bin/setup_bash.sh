@@ -20,4 +20,8 @@ if ! command_exists "jless"; then
     cargo install jless
 fi
 
+if ! command_exists "bumpversion"; then
+    pip install --upgrade bumpversion
+fi
+
 link_file "$PROJECT_DIR/atuin" "$HOME/.config/atuin"
