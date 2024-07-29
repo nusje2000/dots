@@ -61,3 +61,20 @@ sudo modprobe wl
 sudo reboot
 ```
 
+# LSP
+
+## PHP
+
+#### Different project root
+
+```json
+{
+    "$schema": "/home/maartenn/.local/share/nvim/mason/packages/phpactor/phpactor.schema.json",
+    "symfony.enabled": true,
+    "symfony.xml_path": "%project_root%/other-root/var/cache/dev/App_KernelDevDebugContainer.xml",
+    "class_to_file.project_root": "%project_root%/other-root",
+    "language_server_phpstan.bin": "%project_root%/other-root/vendor/bin/phpstan",
+    "composer.autoloader_path": "%project_root%/other-root",
+    "indexer.project_root": "%project_root%/other-root"
+}
+```
