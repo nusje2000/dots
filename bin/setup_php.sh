@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 source $(dirname "$0")/functions.sh
 
-if ! grep  -r ^deb.*ondrej/php /etc/apt; then
+if ! grep  -r ondrej/php /etc/apt &> /dev/null; then
     loading "Installing up php repository..."
 
     sudo add-apt-repository ppa:ondrej/php -y
@@ -18,6 +18,10 @@ install_if_missing "php8.3-bz2"
 install_if_missing "php8.3-curl"
 install_if_missing "php8.3-mbstring"
 install_if_missing "php8.3-intl"
+install_if_missing "php8.3-dom"
+install_if_missing "php8.3-imap"
+install_if_missing "php8.3-zip"
+install_if_missing "php8.3-mysqli"
 
 if ! command_exists composer; then
     loading "Installing composer..."
