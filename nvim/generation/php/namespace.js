@@ -20,10 +20,10 @@ function generateNamespace(file) {
         ([_, relPath]) => file.startsWith(path.join(rootPath, relPath))
     )
 
-    return baseNamespace + path.relative(
+    return (baseNamespace + path.relative(
         path.join(rootPath, relPath),
         path.dirname(file)
-    ).replace('/', '\\')
+    )).replace('/', '\\')
 }
 
 module.exports = generateNamespace
