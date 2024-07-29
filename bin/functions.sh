@@ -63,6 +63,17 @@ function is_wsl() {
 }
 
 function install_if_missing() {
+    # On first run, command might not exist
+    if command_exists "grep-status"; then
+        # Check if there is a package that provides the requested package
+        # This might happen when the package is virtual (and thus is never
+        # installed). An example of this is libfuse2, which actually installs
+        # libfuse2t64.
+        if grep-status -FProvides,Package -sPackage,Provides,Status "$1" | grep -E "^Provides:.*\s$1(\s|,|$)" &> /dev/null; then
+            return 0
+        fi
+    fi
+
     if ! dpkg -s "$1" &> /dev/null;
     then
         loading "Installing $1..."
