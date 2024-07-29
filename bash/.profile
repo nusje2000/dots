@@ -31,3 +31,6 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 . "$HOME/.cargo/env"
+
+# Created by `pipx` on 2024-06-17 09:19:14
+export PATH="$PATH:/home/maartenn/.local/bin"

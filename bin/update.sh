@@ -44,6 +44,7 @@ install_if_missing "sed"
 install_if_missing "tmux"
 install_if_missing "unzip"
 install_if_missing "xclip"
+install_if_missing "clangd"
 
 header "Install frameworks & languages"
 
@@ -53,6 +54,7 @@ source $(dirname "$0")/setup_bash.sh
 source $(dirname "$0")/setup_ngrok.sh
 source $(dirname "$0")/setup_php.sh
 source $(dirname "$0")/setup_node.sh
+source $(dirname "$0")/setup_arduino.sh
 
 header "Install applications"
 
