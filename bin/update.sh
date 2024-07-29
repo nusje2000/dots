@@ -12,6 +12,7 @@ fi
 
 header "Install apt packages"
 
+install_if_missing "dctrl-tools"
 install_if_missing "software-properties-common"
 install_if_missing "autoconf"
 install_if_missing "libfuse2"
@@ -64,6 +65,9 @@ if ! is_wsl; then
     install_if_missing "kcachegrind"
     $BIN_DIR/setup_docker.sh
     $BIN_DIR/setup_alacritty.sh
+
+    install_if_missing "remmina"
+    install_if_missing "remmina-plugin-vnc"
 fi
 
 $BIN_DIR/setup_btop.sh
