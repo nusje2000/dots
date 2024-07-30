@@ -65,6 +65,7 @@ if ! is_wsl; then
     install_if_missing "kcachegrind"
     $BIN_DIR/setup_docker.sh
     $BIN_DIR/setup_alacritty.sh
+    $BIN_DIR/setup_spotify.sh
 
     install_if_missing "remmina"
     install_if_missing "remmina-plugin-vnc"
