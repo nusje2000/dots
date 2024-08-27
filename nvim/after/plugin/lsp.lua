@@ -1,5 +1,29 @@
+local cmp = require('cmp')
+local cmp_action = require('lsp-zero').cmp_action()
 local lsp_zero = require('lsp-zero')
 local lspconfig = require('lspconfig')
+
+require("luasnip.loaders.from_vscode").lazy_load({
+    paths = { vim.fn.stdpath('config') .. '/snippets' }
+})
+
+cmp.setup({
+    sources = {
+        { name = 'luasnip' },
+        { name = 'nvim_lsp' },
+    },
+    mapping = {
+        ['<C-f>'] = cmp_action.luasnip_jump_forward(),
+        ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+        ['<Tab>'] = cmp_action.luasnip_supertab(),
+        ['<S-Tab>'] = cmp_action.luasnip_shift_supertab(),
+        ['<CR>'] = cmp.mapping.confirm({ select = false }),
+    },
+    preselect = 'item',
+    completion = {
+        completeopt = 'menu,menuone,noinsert'
+    },
+})
 
 lsp_zero.on_attach(function(client, bufnr)
     -- see :help lsp-zero-keybindings

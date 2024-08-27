@@ -1,0 +1,57 @@
+{
+    "For": {
+        "prefix": ["for", "for-const"],
+        "body": ["for (const ${2:element} of ${1:array}) {", "\t$0", "}"],
+        "description": "A for loop."
+    },
+    "If": {
+        "prefix": ["if"],
+        "body": ["if (${1}) {", "\t$0", "}"],
+        "description": "Empty if statement"
+    },
+    "Not null": {
+        "prefix": ["nn"],
+        "body": ["if (null !== ${1}) {", "\t$0", "}"],
+        "description": "Not null statement"
+    },
+    "Is null": {
+        "prefix": ["in"],
+        "body": ["if (null === ${1}) {", "\t$0", "}"],
+        "description": "Is null statement"
+    },
+    "Arrow function": {
+        "prefix": ["fn"],
+        "body": ["(${1}) => $0"],
+        "description": "Arrow function"
+    },
+    "Class": {
+        "prefix": ["class"],
+        "body": ["class ${1} {", "\t$0", "} "],
+        "description": "Private readonly property"
+    },
+    "Constructor": {
+        "prefix": ["constructor"],
+        "body": ["private readonly ${1}: ${2}"],
+        "description": "Private readonly property"
+    },
+    "Private readonly property": {
+        "prefix": ["constructor"],
+        "body": ["private readonly ${1}: ${2}"],
+        "description": "Private readonly property"
+    },
+    "Private property": {
+        "prefix": ["constructor"],
+        "body": ["private ${1}: ${2}"],
+        "description": "Private property"
+    },
+    "Public function": {
+        "prefix": ["q"],
+        "body": ["function (${1}) {", "\t$0", "}"],
+        "description": "Public function"
+    },
+    "Private function": {
+        "prefix": ["w"],
+        "body": ["private function (${1}) {", "\t$0", "}"],
+        "description": "private function"
+    }
+}

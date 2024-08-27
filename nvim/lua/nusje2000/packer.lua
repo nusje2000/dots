@@ -40,7 +40,10 @@ return require('packer').startup(function(use)
     use('windwp/nvim-ts-autotag')
     use('chaoren/vim-imageview')
     use('hiphish/rainbow-delimiters.nvim')
-    use({ 'hrsh7th/nvim-cmp', commit = 'b356f2c80cb6c5bae2a65d7f9c82dd5c3fdd6038' })
+    use({
+        'hrsh7th/nvim-cmp',
+        commit = 'b356f2c80cb6c5bae2a65d7f9c82dd5c3fdd6038',
+    })
     use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v3.x',
@@ -57,4 +60,12 @@ return require('packer').startup(function(use)
             { 'L3MON4D3/LuaSnip' },
         }
     }
+    use({
+        "L3MON4D3/LuaSnip",
+        tag = "v2.*",
+        run = "make install_jsregexp"
+    })
+    use({
+        "saadparwaiz1/cmp_luasnip"
+    })
 end)
