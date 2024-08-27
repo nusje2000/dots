@@ -2,7 +2,7 @@
 source $(dirname "$0")/functions.sh
 
 if ! grep  -r ondrej/php /etc/apt &> /dev/null; then
-    loading "Installing up php repository..."
+    loading "Installing php repository..."
 
     sudo add-apt-repository ppa:ondrej/php -y
     sudo apt update

@@ -66,6 +66,7 @@ if ! is_wsl; then
     $BIN_DIR/setup_docker.sh
     $BIN_DIR/setup_alacritty.sh
     $BIN_DIR/setup_spotify.sh
+    $BIN_DIR/setup_1password.sh
 
     install_if_missing "remmina"
     install_if_missing "remmina-plugin-vnc"
