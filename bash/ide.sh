@@ -20,5 +20,7 @@ if tmux has-session -t $SESSION 2>/dev/null; then
     exit 0
 fi
 
-tmux new -s $SESSION -c "$PROJECT_DIR"
+tmux new -d -s $SESSION -c "$PROJECT_DIR"
+tmux send-keys -t $SESSION "v ." ENTER
+tmux attach -t $SESSION
 
