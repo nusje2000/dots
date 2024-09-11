@@ -1,0 +1,42 @@
+{
+    "foreach": {
+        "prefix": ["foreach"],
+        "body": ["foreach (${1:element} as ${2:array}) {", "\t$0", "}"],
+        "description": "foreach statement"
+    },
+    "if": {
+        "prefix": ["if"],
+        "body": ["if (${1}) {", "\t$0", "}"],
+        "description": "Empty if statement"
+    },
+    "not_null": {
+        "prefix": ["nn"],
+        "body": ["if (null !== ${1}) {", "\t$0", "}"],
+        "description": "Not null statement"
+    },
+    "is null": {
+        "prefix": ["in"],
+        "body": ["if (null === ${1}) {", "\t$0", "}"],
+        "description": "is null statement"
+    },
+    "public_function": {
+        "prefix": ["q"],
+        "body": ["public function ${1}(${2}): ${3:void}", "{", "\t$0", "}"],
+        "description": "public function"
+    },
+    "private_function": {
+        "prefix": ["w"],
+        "body": ["private function ${1}(${2}): ${3:void}", "{", "\t$0", "}"],
+        "description": "private function"
+    },
+    "private_readonly_property": {
+        "prefix": ["pr"],
+        "body": ["private readonly ${2} $${1}"],
+        "description": "Private readonly property"
+    },
+    "private_property": {
+        "prefix": ["pp"],
+        "body": ["private ${2} $${1};"],
+        "description": "Private property"
+    }
+}

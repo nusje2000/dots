@@ -35,23 +35,23 @@
         "description": "Private readonly property"
     },
     "Private readonly property": {
-        "prefix": ["constructor"],
+        "prefix": ["pr"],
         "body": ["private readonly ${1}: ${2}"],
         "description": "Private readonly property"
     },
     "Private property": {
-        "prefix": ["constructor"],
+        "prefix": ["pp"],
         "body": ["private ${1}: ${2}"],
         "description": "Private property"
     },
     "Public function": {
         "prefix": ["q"],
-        "body": ["function (${1}) {", "\t$0", "}"],
+        "body": ["(${1}) {", "\t$0", "}"],
         "description": "Public function"
     },
     "Private function": {
         "prefix": ["w"],
-        "body": ["private function (${1}) {", "\t$0", "}"],
+        "body": ["private (${1}) {", "\t$0", "}"],
         "description": "private function"
     }
 }
