@@ -10,17 +10,30 @@ command will install missing applications and dependencies.
 
 ### Applications that are not installed using update.sh
 
-- Google Chrome
-- Spotify
-- DataGrip
-- 1Password
+-   Google Chrome
+-   Spotify
+-   DataGrip
+-   1Password
+
+## Components
+
+### TMUX
+
+Custom tmux configuration including:
+
+-   [Statusbar](https://github.com/2KAbhishek/tmux2k)
+-   [URL Launcher](https://github.com/wfxr/tmux-fzf-url) (C-a + u)
+
+### Bash
+
+-   [FZF](https://github.com/junegunn/fzf)
 
 ## Missing features
 
-- Automatically clone common projects (otf, syntec, etc.)
-- Setup public/private key using 1password CLI
-- Remove old node version if preset
-    - Remove ~/.npm-global as well
+-   Automatically clone common projects (otf, syntec, etc.)
+-   Setup public/private key using 1password CLI
+-   Remove old node version if preset
+    -   Remove ~/.npm-global as well
 
 # Pop!OS
 

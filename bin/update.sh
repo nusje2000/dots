@@ -46,6 +46,7 @@ install_if_missing "tmux"
 install_if_missing "unzip"
 install_if_missing "xclip"
 install_if_missing "clangd"
+install_if_missing "fzf"
 
 header "Install frameworks & languages"
 
