@@ -1,6 +1,7 @@
 vim.keymap.set('n', '<leader>gg', vim.cmd.Git, { })
 vim.keymap.set('n', '<leader>gp', ':G push', { })
 vim.keymap.set('n', '<leader>gP', ':G push --force-with-lease', { })
+vim.keymap.set('n', '<leader>gl', ':G log --oneline<cr>', { })
 
 vim.keymap.set('n', '<leader>gr', function()
     vim.cmd(string.format(
