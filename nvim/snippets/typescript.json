@@ -31,8 +31,8 @@
     },
     "Constructor": {
         "prefix": ["constructor"],
-        "body": ["private readonly ${1}: ${2}"],
-        "description": "Private readonly property"
+        "body": ["constructor (${1}) {", "\t}"],
+        "description": "Constructor"
     },
     "Private readonly property": {
         "prefix": ["pr"],
@@ -46,7 +46,7 @@
     },
     "Public function": {
         "prefix": ["q"],
-        "body": ["(${1}) {", "\t$0", "}"],
+        "body": ["${1}(${2}) {", "\t$0", "}"],
         "description": "Public function"
     },
     "Private function": {
