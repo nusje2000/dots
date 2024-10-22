@@ -8,17 +8,9 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.5',
+        'nvim-telescope/telescope.nvim', tag = '0.1.8',
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
-    use({
-        'kadekillary/Turtles',
-        as = 'turtles'
-    })
-    use({
-        'folke/tokyonight.nvim',
-        as = 'tokyonight',
-    })
     use({
         'bluz71/vim-moonfly-colors',
         as = 'moonfly'
@@ -37,7 +29,6 @@ return require('packer').startup(function(use)
     use('nvim-tree/nvim-tree.lua')
     use('nvim-tree/nvim-web-devicons')
     use('ThePrimeagen/harpoon')
-    use('windwp/nvim-ts-autotag')
     use('chaoren/vim-imageview')
     use('hiphish/rainbow-delimiters.nvim')
     use({
