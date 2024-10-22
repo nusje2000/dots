@@ -4,7 +4,7 @@ local telescope = require('telescope')
 
 local project_files = function()
     local opts = {
-        find_command = { "rg", "--follow", "--files", "--hidden", "--glob", "!**/.git/*" }
+        find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" }
     }
 
     local ok = pcall(require 'telescope.builtin'.git_files, opts)
@@ -15,7 +15,7 @@ end
 
 local all_files = function()
     local opts = {
-        find_command = { "rg", "--follow", "--files", "--hidden", "--glob", "!**/.git/*", "--no-ignore-vcs" }
+        find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*", "--no-ignore-vcs" }
     }
 
     require 'telescope.builtin'.find_files(opts)
