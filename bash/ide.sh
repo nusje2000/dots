@@ -26,16 +26,17 @@ if [ ! -d $PROJECT_DIR ]; then
 fi
 
 SESSION=$(basename "$PROJECT_DIR")
+SESSION=${SESSION//-/_}
 
 echo "[INFO] Using session name \"$SESSION\""
 
 if tmux has-session -t $SESSION 2>/dev/null; then
     echo "[INFO] Session already exists, attaching."
-    tmux a -t $SESSION
+    tmux a -t "$SESSION"
     exit 0
 fi
 
-tmux new -d -s $SESSION -c "$PROJECT_DIR"
-tmux send-keys -t $SESSION "v ." ENTER
-tmux attach -t $SESSION
+tmux new -d -s "$SESSION" -c "$PROJECT_DIR"
+tmux send-keys -t "$SESSION" "v ." ENTER
+tmux attach -t "$SESSION"
 
