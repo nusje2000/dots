@@ -30,6 +30,9 @@ telescope.setup {
         selection_caret = " ",
         use_less = true,
         borderchars = line_border,
+        preview = {
+            filesize_limit = 1
+        },
     },
     pickers = {
         find_files = {}
@@ -45,13 +48,13 @@ vim.keymap.set('n', '<leader>sr', function() vim.cmd('Telescope resume') end)
 vim.keymap.set('n', '<leader>gs', function()
     builtin.grep_string({
         search = vim.fn.input("Grep > "),
-        additional_args = { "--follow", "--hidden" }
+        additional_args = { "--hidden" }
     });
 end)
 vim.keymap.set('n', '<leader>ps', function()
     builtin.grep_string({
-        search = vim.fn.input("Grep > "),
-        additional_args  = { "--follow", "--hidden", "--no-ignore-vcs" }
+        search          = vim.fn.input("Grep > "),
+        additional_args = { "--hidden", "--no-ignore-vcs" }
     });
 end)
 

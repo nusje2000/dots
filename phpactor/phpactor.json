@@ -7,8 +7,10 @@
         "/vendor/composer/**/*"
     ],
     "language_server_phpstan.enabled": true,
-    "language_server_phpstan.bin": "/home/maartenn/.config/phpactor/phpstan",
+    "language_server_phpstan.bin": "%config%/phpstan",
     "language_server_phpstan.level": "max",
     "php_code_sniffer.enabled": true,
-    "php_code_sniffer.bin": "/home/maartenn/.config/phpactor/phpcs"
+    "php_code_sniffer.bin": "%config%/phpcs",
+    "indexer.stub_paths": ["%config%/phpstorm-stubs"],
+    "worse_reflection.stub_dir": "%config%/phpstorm-stubs"
 }

@@ -20,5 +20,14 @@ vim.opt.fillchars = {
     eob =" ",
 }
 
+vim.opt.undolevels=1000
+vim.opt.undoreload=10000
+
+vim.opt.lazyredraw = true -- Improve redraw performance
+vim.opt.synmaxcol = 300   -- Limit syntax highlighting columns
+
 vim.g.mapleader = " "
 vim.g.moonflyTransparent = true
+
+-- Force garbage collection every 10 minutes
+vim.cmd([[autocmd CursorHold * lua collectgarbage("collect")]])

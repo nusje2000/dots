@@ -44,7 +44,7 @@ return require('packer').startup(function(use)
             { 'williamboman/mason-lspconfig.nvim' },
 
             -- LSP Support
-            { 'neovim/nvim-lspconfig' },
+            { 'neovim/nvim-lspconfig', tag = 'v1.1.0' },
             -- Autocompletion
             { 'hrsh7th/nvim-cmp' },
             { 'hrsh7th/cmp-nvim-lsp' },

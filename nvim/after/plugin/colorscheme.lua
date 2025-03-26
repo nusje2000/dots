@@ -43,6 +43,7 @@ moonfly.custom_colors({
 --  spring = '#ffffff',
 --  mineral = '#ffffff',
 --  bay = '#ffffff',
+  slate = '#748999'
 })
 
 function ColorMyPencils(color)
