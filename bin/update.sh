@@ -50,13 +50,13 @@ install_if_missing "fzf"
 
 header "Install frameworks & languages"
 
-source $(dirname "$0")/setup_git.sh
-source $(dirname "$0")/setup_rust.sh
-source $(dirname "$0")/setup_bash.sh
-source $(dirname "$0")/setup_ngrok.sh
-source $(dirname "$0")/setup_php.sh
-source $(dirname "$0")/setup_node.sh
-source $(dirname "$0")/setup_arduino.sh
+source $BIN_DIR/setup_git.sh
+source $BIN_DIR/setup_rust.sh
+source $BIN_DIR/setup_bash.sh
+source $BIN_DIR/setup_ngrok.sh
+source $BIN_DIR/setup_php.sh
+source $BIN_DIR/setup_node.sh
+source $BIN_DIR/setup_arduino.sh
 
 header "Install applications"
 
@@ -64,17 +64,17 @@ source $(dirname "$0")/setup_tmux.sh
 
 if ! is_wsl; then
     install_if_missing "kcachegrind"
-    $BIN_DIR/setup_docker.sh
-    $BIN_DIR/setup_alacritty.sh
-    $BIN_DIR/setup_spotify.sh
-    $BIN_DIR/setup_1password.sh
+    source $BIN_DIR/setup_1password.sh
+    source $BIN_DIR/setup_docker.sh
+    source $BIN_DIR/setup_alacritty.sh
+    source $BIN_DIR/setup_spotify.sh
 
     install_if_missing "remmina"
     install_if_missing "remmina-plugin-vnc"
 fi
 
-$BIN_DIR/setup_btop.sh
-$BIN_DIR/setup_nvim.sh
+source $BIN_DIR/setup_btop.sh
+source $BIN_DIR/setup_nvim.sh
 
 header "Setup environment"
 

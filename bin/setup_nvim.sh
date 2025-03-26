@@ -19,7 +19,7 @@ if ! command_exists nvim; then
     loading "cloning nvim repository..."
     git clone https://github.com/neovim/neovim.git ../neovim
     loading "building nvim..."
-    (cd ../neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo && sudo make install)
+    (cd ../neovim && git checkout stable && make CMAKE_BUILD_TYPE=RelWithDebInfo && sudo make install)
     success "nvim has been installed"
 else
     success "nvim is already installed"
