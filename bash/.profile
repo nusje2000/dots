@@ -34,3 +34,7 @@ fi
 
 # Created by `pipx` on 2024-06-17 09:19:14
 export PATH="$PATH:/home/maartenn/.local/bin"
+
+if command -v xset &> /dev/null; then
+    xset r rate 250 50
+fi
