@@ -11,5 +11,6 @@ alias v="nvim"
 
 alias dots="ide dots"
 alias automotive="ide syntec/automotive"
+alias automotive-ansible="ide syntec/automotive-ansible"
 alias otf="ide otf-shopify"
 alias finder="nautilus --browser"
