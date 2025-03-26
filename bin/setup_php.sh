@@ -61,4 +61,12 @@ if [ ! -e "$PHPSTAN" ]; then
     success "phpstan has been installed"
 fi
 
+STUB_FILES="$PROJECT_DIR/phpactor/phpstorm-stubs"
+if [ ! -d $STUB_FILES ]; then
+    loading "Cloning jetbrains/phpstorm-stubs"
+    git clone git@github.com:JetBrains/phpstorm-stubs.git $STUB_FILES
+    (cd $STUB_FILES && git checkout "v2024.2")
+    success "Cloned jetbrains/phpstorm-stubs"
+fi
+
 link_file "$PROJECT_DIR/phpactor" "$HOME/.config/phpactor"
