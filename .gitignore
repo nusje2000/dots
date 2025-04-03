@@ -4,3 +4,4 @@ phpactor/phpstan
 phpactor/phpcs
 phpactor/phpcbf
 phpactor/phpstorm-stubs
+phpactor/php-debugger

@@ -59,4 +59,10 @@ return require('packer').startup(function(use)
     use({
         "saadparwaiz1/cmp_luasnip"
     })
+
+    -- php debugger
+    use('mfussenegger/nvim-dap')
+    use('rcarriga/nvim-dap-ui')
+    use('theHamsta/nvim-dap-virtual-text')
+    use('nvim-telescope/telescope-dap.nvim')
 end)

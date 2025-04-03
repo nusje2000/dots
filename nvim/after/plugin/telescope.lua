@@ -40,6 +40,7 @@ telescope.setup {
 }
 
 telescope.load_extension('harpoon')
+telescope.load_extension('dap')
 
 vim.keymap.set('n', '<leader>pf', all_files, {})
 vim.keymap.set('n', '<leader>gf', project_files, {})

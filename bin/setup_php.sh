@@ -69,4 +69,12 @@ if [ ! -d $STUB_FILES ]; then
     success "Cloned jetbrains/phpstorm-stubs"
 fi
 
+PHP_DEBUGGER="$PROJECT_DIR/phpactor/php-debugger"
+if [ ! -d $PHP_DEBUGGER ]; then
+    loading "Cloning xdebug/vscode-php-debug"
+    git clone https://github.com/xdebug/vscode-php-debug.git $PHP_DEBUGGER
+    (cd $PHP_DEBUGGER && npm install && npm run build)
+    success "Cloned xdebug/vscode-php-debug"
+fi
+
 link_file "$PROJECT_DIR/phpactor" "$HOME/.config/phpactor"

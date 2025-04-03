@@ -1,5 +1,13 @@
 local theme = require 'lualine.themes.moonfly'
 
+local function dap()
+    if require('dap').session() == nil then
+        return ''
+    end
+
+    return '<F5>   <F10>   <F11>   <F12>   <L>ds ';
+end
+
 require('lualine').setup({
     options = {
         icons_enabled = true,
@@ -22,7 +30,7 @@ require('lualine').setup({
     sections = {
         lualine_a = { 'mode' },
         lualine_b = { 'branch', 'diff', 'diagnostics' },
-        lualine_c = { 'filename' },
+        lualine_c = { 'filename', dap },
         lualine_x = { 'encoding', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' }
