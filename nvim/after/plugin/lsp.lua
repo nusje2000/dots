@@ -25,11 +25,42 @@ cmp.setup({
     },
 })
 
-lsp_zero.on_attach(function(client, bufnr)
-    -- see :help lsp-zero-keybindings
-    lsp_zero.default_keymaps({ buffer = bufnr })
+lsp_zero.on_attach(function(_, bufnr)
+    local map = function(m, lhs, rhs, desc)
+        local key_opts = { buffer = bufnr, desc = desc, nowait = true }
+        vim.keymap.set(m, lhs, rhs, key_opts)
+    end
 
-    vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>', { buffer = bufnr })
+    map('n', 'gr', '<cmd>Telescope lsp_references<cr>', 'Show references')
+    map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', 'Go to definition')
+    map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', 'Go to declaration')
+    map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', 'Go to implementation')
+    map('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', 'Go to type definition')
+    map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', 'Go to reference')
+    map('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', 'Rename symbol')
+    map('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Execute code action')
+    map('n', 'g?', '<cmd>lua vim.diagnostic.open_float()<cr>', 'Execute code action')
+    map('n', '<F3>', function()
+        vim.lsp.buf.format({
+            filter = function(client)
+                print(client.name)
+
+                local formatter_file = vim.fn.findfile('.nvim-formatters', vim.fn.getcwd() .. ';')
+                if formatter_file == '' then
+                    return true
+                end
+
+
+                local formatters = {}
+                for line in io.lines(formatter_file) do
+                    formatters[line] = true
+                end
+
+                return formatters[client.name] ~= nil
+            end,
+            bufnr = bufnr
+        })
+    end)
 end)
 
 local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -44,7 +75,9 @@ require('mason-lspconfig').setup({
         "phpactor"
     },
     handlers = {
-        lsp_zero.default_setup,
+        function(server_name)
+            require('lspconfig')[server_name].setup({})
+        end,
         lua_ls = function()
             lspconfig.lua_ls.setup({
                 capabilities = lsp_capabilities,
@@ -97,4 +130,5 @@ vim.diagnostic.config({
             )
         end
     },
+    virtual_lines = false,
 })
