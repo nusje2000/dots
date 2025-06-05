@@ -20,6 +20,17 @@ return require('packer').startup(function(use)
     use('nvim-treesitter/playground')
     use('tpope/vim-fugitive')
     use('mbbill/undotree')
+    use('github/copilot.vim')
+    use {
+        "CopilotC-Nvim/CopilotChat.nvim",
+        dependencies = {
+            { "github/copilot.vim" },
+            { "nvim-lua/plenary.nvim", branch = "master" },
+        },
+        build = "make tiktoken",
+        opts = {
+        },
+    }
     use {
         'nvim-lualine/lualine.nvim',
         requires = { 'nvim-tree/nvim-web-devicons', opt = true }
