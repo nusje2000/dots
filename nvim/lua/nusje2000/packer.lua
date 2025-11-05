@@ -46,16 +46,59 @@ return require('packer').startup(function(use)
         'hrsh7th/nvim-cmp',
         commit = 'b356f2c80cb6c5bae2a65d7f9c82dd5c3fdd6038',
     })
+    use({
+        'MeanderingProgrammer/render-markdown.nvim',
+        after = { 'nvim-treesitter' },
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true },
+        config = function()
+            require('render-markdown').setup({})
+        end,
+    })
+    use({
+        "yetone/avante.nvim",
+        branch = 'main',
+        run = 'make',
+        config = function()
+            require('copilot').setup()
+            require('avante').setup({
+                instructions_file = "avante.md",
+                provider = "copilot",
+                providers = {
+                    copilot = {
+                          endpoint = "https://api.githubcopilot.com",
+                          model = "gpt-4o-2024-11-20",
+                    }
+                }
+            })
+        end,
+        requires = {
+            { "nvim-lua/plenary.nvim" },
+            { "MunifTanjim/nui.nvim" },
+            { 'hrsh7th/nvim-cmp' },
+            { "nvim-tree/nvim-web-devicons" },
+            { "MeanderingProgrammer/render-markdown.nvim" },
+            { "zbirenbaum/copilot.lua" }
+        }
+    })
+    use({
+        "mason-org/mason-lspconfig.nvim",
+        opts = {},
+        requires = {
+            { "mason-org/mason.nvim", opts = {} },
+            "neovim/nvim-lspconfig",
+        }
+    })
+    use({
+        "folke/noice.nvim",
+        requires = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+        }
+    })
     use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v3.x',
         requires = {
-            --- Uncomment these if you want to manage LSP servers from neovim
-            { 'williamboman/mason.nvim' },
-            { 'williamboman/mason-lspconfig.nvim' },
-
-            -- LSP Support
-            { 'neovim/nvim-lspconfig', tag = 'v1.1.0' },
             -- Autocompletion
             { 'hrsh7th/nvim-cmp' },
             { 'hrsh7th/cmp-nvim-lsp' },

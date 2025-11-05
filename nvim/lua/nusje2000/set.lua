@@ -6,6 +6,8 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
+vim.opt.mouse = ""
+
 vim.opt.smartindent = false
 vim.opt.wrap = false
 
@@ -17,13 +19,12 @@ vim.opt.listchars = {
     space ="•"
 }
 vim.opt.fillchars = {
-    eob =" ",
+    eob = " ",
 }
 
 vim.opt.undolevels=1000
 vim.opt.undoreload=10000
 
-vim.opt.lazyredraw = true -- Improve redraw performance
 vim.opt.synmaxcol = 300   -- Limit syntax highlighting columns
 
 vim.g.mapleader = " "

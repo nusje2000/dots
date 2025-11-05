@@ -5,13 +5,13 @@ RED="\e[31m"
 GREEN="\e[32m"
 PURPLE="\e[35m"
 CYAN="\e[36m"
-BLACK="\e[m"
+BLACK="\e[30m"
 BG_GREEN="\e[42m"
 BG_PURPLE="\e[45m"
 BG_CYAN="\e[46m"
 BG_RED="\e[41m"
 ENDCOLOR="\e[0m"
-BAR_END="\ue0c0"
+BAR_END=""
 
 PROJECT_DIR=$(realpath $(dirname $(dirname "$0")))
 BIN_DIR="$PROJECT_DIR/bin"
@@ -37,15 +37,19 @@ function logo() {
 }
 
 function loading() {
-    printf "${BG_CYAN} \uea9a ${ENDCOLOR}${CYAN}${BAR_END}${ENDCOLOR}   $1\n"
+    printf "${BG_CYAN}${BLACK}  ${ENDCOLOR}${CYAN}${BAR_END}${ENDCOLOR}   %b\n" "$1"
+}
+
+function info() {
+    printf "${BG_CYAN}${BLACK}  ${ENDCOLOR}${CYAN}${BAR_END}${ENDCOLOR}   %b\n" "$1"
 }
 
 function success() {
-    printf "${BG_GREEN} \uf14a ${ENDCOLOR}${GREEN}${BAR_END}${ENDCOLOR}   $1\n"
+    printf "${BG_GREEN}${BLACK}  ${ENDCOLOR}${GREEN}${BAR_END}${ENDCOLOR}   %b\n" "$1"
 }
 
 function debug() {
-    printf "${BG_PURPLE} \uf400 ${ENDCOLOR}${PURPLE}${BAR_END}${ENDCOLOR}   $1\n"
+    printf "${BG_PURPLE}${BLACK}  ${ENDCOLOR}${PURPLE}${BAR_END}${ENDCOLOR}   %b\n" "$1"
 }
 
 function header() {
@@ -56,6 +60,15 @@ function header() {
 
 function is_wsl() {
     if [[ $(grep -i Microsoft /proc/version) ]]; then
+        return 0
+    fi
+
+    return 1
+}
+
+function is_osx() {
+    UNAME=$(uname)
+    if [[ $UNAME = "Darwin" ]]; then
         return 0
     fi
 
@@ -76,7 +89,7 @@ function install_if_missing() {
 
     if ! dpkg -s "$1" &> /dev/null;
     then
-        loading "Installing $1..."
+        loading "Installing $1 (using apt-get)..."
         
         if [ $VERBOSE = true ]; then
             sudo apt-get install -y "$1"
@@ -88,6 +101,38 @@ function install_if_missing() {
     else
         success "$1 is already installed"
     fi
+}
+
+function brew_install_if_missing() {
+    if brew list $1 &> /dev/null; then
+        success "$1 is already installed"
+        return 0
+    fi
+
+    loading "Installing $1 (using brew)..."
+    if [ $VERBOSE = true ]; then
+        brew install "$1"
+    else
+        brew install "$1" &> /dev/null
+    fi
+
+    success "$1 has been installed"
+}
+
+function brew_install_cask_if_missing() {
+    if brew list --cask $1 &> /dev/null; then
+        success "$1 is already installed"
+        return 0
+    fi
+
+    loading "Installing $1 (using brew)..."
+    if [ $VERBOSE = true ]; then
+        brew install --cask "$1"
+    else
+        brew install --cask "$1" &> /dev/null
+    fi
+
+    success "$1 has been installed"
 }
 
 function confirm() {
@@ -115,7 +160,7 @@ function command_exists() {
 
 function link_file() {
     SOURCE=$(realpath $1)
-    TARGET=$(realpath $2)
+    TARGET=$(realpath $2 || echo $2)
 
     if [[ $(readlink -f "$TARGET") == "$SOURCE" ]]; then
         debug "$2 already points to $SOURCE"
@@ -125,12 +170,12 @@ function link_file() {
 
     loading "Linking $TARGET to $SOURCE"
 
-    if [[ -e $TARGET ]]; then
+    if [[ -e $TARGET || -h $TARGET ]]; then
         if ! confirm "$TARGET already exists, remove it?"; then
             return 1
         fi
 
-        rm -rf $TARGET
+        sudo rm -rf $TARGET
     fi
 
     sudo ln -s $SOURCE $TARGET

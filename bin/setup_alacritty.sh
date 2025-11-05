@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 source $(dirname "$0")/functions.sh
 
-if ! command_exists alacritty; then
+if is_osx; then
+    debug "OXS detected, skipping alacritty install"
+elif ! command_exists alacritty; then
     loading "Installing alacritty..."
 
     cd ..

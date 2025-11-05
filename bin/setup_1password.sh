@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 source $(dirname "$0")/functions.sh
 
-if ! grep  -r 1password /etc/apt &> /dev/null; then
+if ! is_osx && ! grep  -r 1password /etc/apt &> /dev/null; then
     loading "Installing 1password repository..."
 
     sudo curl -sS https://downloads.1password.com/linux/keys/1password.asc | gpg --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
@@ -18,4 +18,10 @@ else
     success "1password repository is already installed"
 fi
 
-install_if_missing "1password-cli"
+if ! command_exists "op"; then
+    if is_osx; then
+        brew install 1password-cli
+    else
+        install_if_missing "1password-cli"
+    fi
+fi

@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 source $(dirname "$0")/functions.sh
 
+if is_osx; then
+    info "OSX is not supported in ${BASH_SOURCE[0]}"
+    return 0;
+fi
+
 if ! is_wsl; then
     debug "Skipping win32yank installation for non-wsl environment"
 elif [ ! -f /usr/local/bin/win32yank.exe ]; then

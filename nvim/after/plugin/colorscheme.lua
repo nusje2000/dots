@@ -4,6 +4,8 @@ end
 
 local moonfly = require("moonfly")
 
+vim.g.moonflyCursorColor = true
+
 moonfly.custom_colors({
 --  black = '#ffffff',
 --  white = '#ffffff',
@@ -50,17 +52,22 @@ function ColorMyPencils(color)
     color = color or "moonfly"
     vim.cmd.colorscheme(color)
 
+    vim.opt.termguicolors = true
+    -- Highlight("Cursor", { fg = "green", bg = "green" })
+    -- Highlight("Cursor2", { fg = "red", bg = "red" })
+    vim.opt.guicursor = "n-v-c:block-Cursor/lCursor,i-ci-ve:ver25-Cursor2/lCursor2,r-cr:hor20,o:hor50"
+
     Highlight("TelescopeSelection", { link = "MoonflyCrimson" })
-    Highlight("TelescopeBorder", { fg = "#80a0ff", bg = "#323437" })
+    Highlight("TelescopeBorder", { fg = "#80a0ff", bg = nil })
     Highlight("TelescopeMatching", { link = "MoonflyCrimson" })
-    Highlight("TelescopePromptBorder", { fg = "#80a0ff", bg = "#323437" })
+    Highlight("TelescopePromptBorder", { fg = "#80a0ff", bg = nil })
     Highlight("TelescopeResultsTitle", { fg = "#eeeeee", bg = "#ff5454", bold = true })
     Highlight("TelescopePreviewTitle", { fg = "#eeeeee", bg = "#ff5454", bold = true })
-    Highlight("TelescopePromptPrefix", { fg = "#80a0ff" })
-    Highlight("TelescopeNormal", { bg = "#323437" })
-    Highlight("TelescopePromptNormal", { fg = "#eeeeee", bg = "#323437" })
+    Highlight("TelescopePromptPrefix", { fg = "#80a0ff", bg = nil })
+    Highlight("TelescopeNormal", { bg = nil })
+    Highlight("TelescopePromptNormal", { fg = "#eeeeee", bg = nil })
     Highlight("TelescopePromptTitle", { fg = "#eeeeee", bg = "#ff5454", bold = true })
-    Highlight("MsgArea", { fg = "#80a0ff", bg = "#323437", bold = true })
+    Highlight("MsgArea", { fg = "#80a0ff", bg = nil, bold = true })
 
     Highlight("DiagnosticSignWarn", { link = "MoonflyKhaki" })
     Highlight("DiagnosticSignHint", { link = "MoonflyPurple" })
@@ -71,6 +78,10 @@ function ColorMyPencils(color)
     Highlight("DiagnosticVirtualTextHint", { link = "MoonflyPurple" })
     Highlight("DiagnosticVirtualTextInfo", { link = "MoonflyLime" })
     Highlight("DiagnosticVirtualTextError", { link = "MoonflyCrimson" })
+
+    Highlight("Statusline", { bg = nil })
+    Highlight("StatusLineNC", { bg = nil })
+    Highlight("WinSeparator", { fg = "#444444" })
 
     Highlight("@string", { link = "MoonflyEmerald" })
 end

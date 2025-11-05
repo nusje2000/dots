@@ -63,42 +63,33 @@ lsp_zero.on_attach(function(_, bufnr)
     end)
 end)
 
-local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-require('mason').setup({})
+require('mason').setup()
 require('mason-lspconfig').setup({
-    ensure_installed = {
-        "ts_ls",
-        "eslint",
-        "lua_ls",
-        "rust_analyzer",
-        "phpactor"
-    },
-    handlers = {
-        function(server_name)
-            require('lspconfig')[server_name].setup({})
-        end,
-        lua_ls = function()
-            lspconfig.lua_ls.setup({
-                capabilities = lsp_capabilities,
-                settings = {
-                    Lua = {
-                        runtime = {
-                            version = 'LuaJIT',
-                        },
-                        diagnostics = {
-                            globals = { 'vim' }
-                        },
-                        workspace = {
-                            library = {
-                                vim.env.VIMRUNTIME,
-                            }
-                        }
-                    }
+    automatic_enable = true,
+    ensure_installed = {},
+})
+
+vim.lsp.config('lua_ls', {
+  root_markers = { '.clang-format', 'compile_commands.json' },
+    settings = {
+        Lua = {
+            runtime = {
+                version = 'LuaJIT',
+            },
+            diagnostics = {
+                globals = { 'vim' }
+            },
+            workspace = {
+                library = {
+                    vim.env.VIMRUNTIME,
                 }
-            })
-        end,
-    },
+            }
+        }
+    }
+})
+
+vim.lsp.config('phpactor', {
+    root_markers = {'composer.lock', '.git'}
 })
 
 vim.keymap.set('n', '<C-Space>', vim.lsp.buf.code_action)

@@ -40,6 +40,7 @@ telescope.setup {
 }
 
 telescope.load_extension('harpoon')
+telescope.load_extension('notify')
 telescope.load_extension('dap')
 
 vim.keymap.set('n', '<leader>pf', all_files, {})
@@ -47,14 +48,12 @@ vim.keymap.set('n', '<leader>gf', project_files, {})
 vim.keymap.set('n', '<leader>dd', builtin.lsp_document_symbols, {})
 vim.keymap.set('n', '<leader>sr', function() vim.cmd('Telescope resume') end)
 vim.keymap.set('n', '<leader>gs', function()
-    builtin.grep_string({
-        search = vim.fn.input("Grep > "),
+    builtin.live_grep({
         additional_args = { "--hidden" }
     });
 end)
 vim.keymap.set('n', '<leader>ps', function()
-    builtin.grep_string({
-        search          = vim.fn.input("Grep > "),
+    builtin.live_grep({
         additional_args = { "--hidden", "--no-ignore-vcs" }
     });
 end)

@@ -1,8 +1,4 @@
 vim.keymap.set('t', '<Esc>', "<C-\\><C-n>")
-vim.keymap.set('n', '<leader>m', function()
-    vim.cmd('split')
-    vim.cmd('terminal btop')
-end)
 
 vim.keymap.set('n', '<leader>q', vim.cmd.quit)
 vim.keymap.set('n', '<leader>t', vim.cmd.tabnew)
@@ -10,10 +6,13 @@ vim.keymap.set('n', '<leader>T', vim.cmd.tabclose)
 vim.keymap.set('n', '<A-l>', vim.cmd.tabnext)
 vim.keymap.set('n', '<A-h>', vim.cmd.tabprevious)
 
-vim.keymap.set('n', '<C-h>', ':wincmd h<CR>')
-vim.keymap.set('n', '<C-j>', ':wincmd j<CR>')
-vim.keymap.set('n', '<C-k>', ':wincmd k<CR>')
-vim.keymap.set('n', '<C-l>', ':wincmd l<CR>')
+vim.keymap.set('n', '<C-h>', function () vim.cmd.wincmd('h') end)
+vim.keymap.set('n', '<C-j>', function () vim.cmd.wincmd('j') end)
+vim.keymap.set('n', '<C-k>', function () vim.cmd.wincmd('k') end)
+vim.keymap.set('n', '<C-l>', function () vim.cmd.wincmd('l') end)
+
+vim.keymap.set('n', '<leader>n', function () vim.cmd('Telescope notify') end)
+vim.keymap.set('n', '<leader>w', function () vim.cmd('w') end)
 
 vim.api.nvim_create_autocmd('FileType', {
     pattern = { 'php' },

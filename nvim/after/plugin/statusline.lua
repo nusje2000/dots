@@ -1,4 +1,7 @@
 local theme = require 'lualine.themes.moonfly'
+theme.inactive.c.bg = nil
+theme.normal.c.bg = nil
+theme.normal.b.bg = nil
 
 local function dap()
     if require('dap').session() == nil then
@@ -6,6 +9,12 @@ local function dap()
     end
 
     return '<F5>   <F10>   <F11>   <F12>   <L>ds ';
+end
+
+function isRecording()
+  local reg = vim.fn.reg_recording()
+  if reg == "" then return "" end -- not recording
+  return "󰑊 " .. reg
 end
 
 require('lualine').setup({
@@ -30,15 +39,15 @@ require('lualine').setup({
     sections = {
         lualine_a = { 'mode' },
         lualine_b = { 'branch', 'diff', 'diagnostics' },
-        lualine_c = { 'filename', dap },
+        lualine_c = { 'filename', dap, isRecording },
         lualine_x = { 'encoding', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' }
     },
     inactive_sections = {
-        lualine_a = {},
+        lualine_a = { 'filename' },
         lualine_b = {},
-        lualine_c = { 'filename' },
+        lualine_c = {},
         lualine_x = {},
         lualine_y = {},
         lualine_z = {}

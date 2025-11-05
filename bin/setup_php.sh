@@ -1,27 +1,39 @@
 #!/usr/bin/env bash
 source $(dirname "$0")/functions.sh
 
-if ! grep  -r ondrej/php /etc/apt &> /dev/null; then
-    loading "Installing php repository..."
-
-    sudo add-apt-repository ppa:ondrej/php -y
-    sudo apt update
-
-    success "Installed php repository"
-else
-    success "php repository is already installed"
+if is_osx; then
+    if ! command_exists php; then
+        loading "Installing php..."
+        brew install php
+        success "php has been installed"
+    else
+        success "php is already installed"
+    fi
 fi
 
-install_if_missing "php8.3"
-install_if_missing "php8.3-cli"
-install_if_missing "php8.3-bz2"
-install_if_missing "php8.3-curl"
-install_if_missing "php8.3-mbstring"
-install_if_missing "php8.3-intl"
-install_if_missing "php8.3-dom"
-install_if_missing "php8.3-imap"
-install_if_missing "php8.3-zip"
-install_if_missing "php8.3-mysqli"
+if ! is_osx; then
+    if ! grep  -r ondrej/php /etc/apt &> /dev/null; then
+        loading "Installing php repository..."
+
+        sudo add-apt-repository ppa:ondrej/php -y
+        sudo apt update
+
+        success "Installed php repository"
+    else
+        success "php repository is already installed"
+    fi
+
+    install_if_missing "php8.3"
+    install_if_missing "php8.3-cli"
+    install_if_missing "php8.3-bz2"
+    install_if_missing "php8.3-curl"
+    install_if_missing "php8.3-mbstring"
+    install_if_missing "php8.3-intl"
+    install_if_missing "php8.3-dom"
+    install_if_missing "php8.3-imap"
+    install_if_missing "php8.3-zip"
+    install_if_missing "php8.3-mysqli"
+fi
 
 if ! command_exists composer; then
     loading "Installing composer..."

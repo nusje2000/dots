@@ -1,40 +1,55 @@
-[colors.primary]
-background = '#101010'
-foreground = '#ffffff'
-
-[colors.cursor]
-text = '#F81CE5'
-cursor = '#ffffff'
-
-[colors.normal]
-black   = '#000000'
-red     = '#fe0100'
-green   = '#33ff00'
-yellow  = '#feff00'
-blue    = '#0066ff'
-magenta = '#cc00ff'
-cyan    = '#00ffff'
-white   = '#d0d0d0'
+[colors]
+draw_bold_text_with_bright_colors = true
 
 [colors.bright]
-black   = '#808080'
-red     = '#fe0100'
-green   = '#33ff00'
-yellow  = '#feff00'
-blue    = '#0066ff'
-magenta = '#cc00ff'
-cyan    = '#00ffff'
-white   = '#FFFFFF'
+black = "#949494"
+blue = "#74b2ff"
+cyan = "#85dc85"
+green = "#36c692"
+magenta = "#ae81ff"
+red = "#ff5189"
+white = "#e4e4e4"
+yellow = "#c6c684"
+
+[colors.cursor]
+cursor = "#8e8e8e"
+text = "#080808"
+
+[colors.normal]
+black = "#323437"
+blue = "#80a0ff"
+cyan = "#79dac8"
+green = "#8cc85f"
+magenta = "#cf87e8"
+red = "#ff5d5d"
+white = "#c6c6c6"
+yellow = "#e3c78a"
+
+[colors.primary]
+background = "#080808"
+bright_foreground = "#eeeeee"
+foreground = "#bdbdbd"
+
+[colors.selection]
+background = "#b2ceee"
+text = "#080808"
 
 [window]
 padding.x = 0
 padding.y = 0
 title = 'Ultimate IDE Application'
 dynamic_title = false
-opacity = 0.90
+opacity = 0.60
+blur = true
+decorations = "None"
+startup_mode = "Maximized"
 
 [scrolling]
 history = 100000
 
 [font]
-normal = { family = "RobotoMono Nerd Font", style = "Regular" }
+normal = { family = "RobotoMono Nerd Font", style = "Medium" }
+bold = { family = "RobotoMono Nerd Font", style = "Bold" }
+italic = { family = "RobotoMono Nerd Font", style = "Retina" }
+bold_italic = { family = "RobotoMono Nerd Font", style = "SemiBold" }
+size = 12
