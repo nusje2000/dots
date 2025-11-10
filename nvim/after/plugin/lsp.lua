@@ -25,6 +25,17 @@ cmp.setup({
     },
 })
 
+vim.lsp.config('pylsp', {
+    settings = {
+        pylsp = {
+            plugins = {
+                pylint = { enabled = false },
+                pycodestyle = { enabled = false },
+            }
+        }
+    }
+})
+
 lsp_zero.on_attach(function(_, bufnr)
     local map = function(m, lhs, rhs, desc)
         local key_opts = { buffer = bufnr, desc = desc, nowait = true }
