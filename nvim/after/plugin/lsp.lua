@@ -1,7 +1,6 @@
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
 local lsp_zero = require('lsp-zero')
-local lspconfig = require('lspconfig')
 
 require("luasnip.loaders.from_vscode").lazy_load({
     paths = { vim.fn.stdpath('config') .. '/snippets' }
@@ -101,6 +100,10 @@ vim.lsp.config('lua_ls', {
 
 vim.lsp.config('phpactor', {
     root_markers = {'composer.lock', '.git'}
+})
+
+vim.lsp.config('csharp_ls', {
+    root_markers = {'*.csproj'}
 })
 
 vim.keymap.set('n', '<C-Space>', vim.lsp.buf.code_action)

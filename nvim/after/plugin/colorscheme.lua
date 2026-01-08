@@ -84,6 +84,7 @@ function ColorMyPencils(color)
     Highlight("WinSeparator", { fg = "#444444" })
 
     Highlight("@string", { link = "MoonflyEmerald" })
+    Highlight("@markup.list.checked", { link = "MoonflyEmerald" })
 end
 
 ColorMyPencils()

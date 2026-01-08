@@ -51,7 +51,18 @@ return require('packer').startup(function(use)
         after = { 'nvim-treesitter' },
         requires = { 'nvim-tree/nvim-web-devicons', opt = true },
         config = function()
-            require('render-markdown').setup({})
+            require('render-markdown').setup({
+                completions = { lsp = { enabled = true } },
+                checkbox = {
+                    enabled = true,
+                    unchecked = {
+                        icon = '󰄱 ',
+                    },
+                    checked = {
+                        icon = '󰱒 ',
+                    },
+                },
+            })
         end,
     })
     use({
@@ -82,10 +93,11 @@ return require('packer').startup(function(use)
     })
     use({
         "mason-org/mason-lspconfig.nvim",
+        tag = "v2.1.*",
         opts = {},
         requires = {
             { "mason-org/mason.nvim", opts = {} },
-            "neovim/nvim-lspconfig",
+            { "neovim/nvim-lspconfig", tag = "v2.5.*" },
         }
     })
     use({
