@@ -91,6 +91,7 @@ if ! is_wsl; then
     fi
 fi
 
+source $BIN_DIR/setup_claude.sh
 source $BIN_DIR/setup_btop.sh
 source $BIN_DIR/setup_nvim.sh
 
