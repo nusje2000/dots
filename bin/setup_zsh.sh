@@ -18,6 +18,9 @@ link_file "$PROJECT_DIR/shell/.secrets" "$HOME/.secrets"
 link_file "$PROJECT_DIR/shell/.zshrc" "$HOME/.zshrc"
 link_file "$PROJECT_DIR/shell/ide.sh" "/usr/local/bin/ide"
 
+mkdir -p "$HOME/.oh-my-zsh/custom/completions"
+link_file "$PROJECT_DIR/shell/ide_completion.zsh" "$HOME/.oh-my-zsh/custom/completions/ide_completion.zsh"
+
 # TODO: install HTMLQ, JLESS, BUMPVERSION
 
 if ! command_exists "atuin"; then

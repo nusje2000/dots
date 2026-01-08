@@ -1,7 +1,63 @@
 #!/usr/bin/env bash
 
+set -e
+
 PROJECTS_DIR=$HOME/projects
 PROJECT="${1:-.}"
+
+if [ "$PROJECT" == "new" ]; then
+    echo "[INFO] Creating a new project."
+    PROJECT_NAME="${2}"
+
+    if [ -z "$PROJECT_NAME" ]; then
+        read -p "Enter the new project name: " PROJECT_NAME
+    fi
+
+    cd $PROJECTS_DIR
+
+    PROJECT_DIR="$PROJECTS_DIR/$PROJECT_NAME"
+
+    # show select for templates
+    echo "Select a template for your new project:"
+    select TEMPLATE in "Tanstack start" "Empty"; do
+        case $TEMPLATE in
+            "Tanstack start")
+                echo "[INFO] Creating a new Tanstack project in $PROJECT_DIR"
+                npm create @tanstack/start@latest -- $PROJECT_NAME --toolchain biome --tailwind --add-ons shadcn
+                cd "$PROJECT_DIR"
+
+                cat <<EOF > "$PROJECT_DIR/.env"
+DOCKER_COMPOSE_PORT=3000
+EOF
+
+                cat <<EOF > "$PROJECT_DIR/docker-compose.yml"
+services:
+  app:
+    image: riotbyte/node:24
+    command: npm run dev -- --host 0.0.0.0
+    volumes:
+      - .:/home/node/application
+    ports:
+      - "\$DOCKER_COMPOSE_PORT:3000"
+EOF
+                ;;
+            "Empty")
+                echo "[INFO] Creating an empty project in $PROJECT_DIR"
+                mkdir -p "$PROJECT_DIR"
+                ;;
+            *)
+                echo "[ERROR] Invalid template selected."
+                exit 1
+                ;;
+        esac
+        break
+    done
+
+    echo "[INFO] New project created at $PROJECT_DIR"
+    ide "$PROJECT_NAME"
+
+    exit 0
+fi
 
 if [[ "$PROJECT" == git@* ]]; then
     read -p "$PROJECT appears to be a git project, would you like to clone this project? [Y/n] " -n 1 -r

@@ -119,3 +119,5 @@ source <(atuin init zsh)
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+source $HOME/.oh-my-zsh/custom/completions/ide_completion.zsh
+
