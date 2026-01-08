@@ -32,3 +32,33 @@ if is_osx; then
 fi
 
 link_file "$PROJECT_DIR/claude/settings.json" "$HOME/.claude/settings.json"
+link_file "$PROJECT_DIR/claude/global-claude.md" "$HOME/.claude/CLAUDE.md"
+
+function claude_mcp_exists() {
+    NAME=$1
+
+    if jq -e --arg NAME "$NAME" '.mcpServers[$NAME]' ~/.claude.json > /dev/null; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+if ! claude_mcp_exists "context7"; then
+    info "Adding context7 MCP to claude..."
+    TOKEN=$(op read "op://Private/Context7/Saved on context7.com/API Key - Claude Code")
+    claude mcp add --transport http --scope user context7 https://mcp.context7.com/mcp --header "CONTEXT7_API_KEY: $TOKEN"
+    success "Added context7 MCP to claude"
+else
+    success "context7 MCP already exists in claude"
+fi
+
+if ! claude_mcp_exists "home-assistant"; then
+    info "Adding home-assistant MCP to claude..."
+    TOKEN=$(op read "op://Private/Home Assistant/API Key - Claude Code")
+    claude mcp add --transport http --scope user home-assistant http://localhost:8123/api/claude --header "Authorization: Bearer $TOKEN"
+    success "Added home-assistant MCP to claude"
+else
+    success "home-assistant MCP already exists in claude"
+fi
+
