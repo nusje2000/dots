@@ -13,4 +13,5 @@ brew_install_if_missing jless
 brew_install_if_missing gh
 
 brew_install_cask_if_missing raycast
+brew_install_cask_if_missing ngrok
 

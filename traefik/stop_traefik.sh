@@ -2,13 +2,8 @@
 
 set -e
 
-function loading() {
-    printf "\e[46m\e[30m  \e[0m\e[36m\e[0m   %b\n" "$1"
-}
-
-function success() {
-    printf "\e[42m\e[30m  \e[0m\e[32m\e[0m   %b\n" "$1"
-}
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
+source "$SCRIPT_DIR/../bin/functions.sh"
 
 
 loading "Stopping Traefik..."

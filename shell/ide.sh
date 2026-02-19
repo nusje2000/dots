@@ -23,7 +23,7 @@ if [ "$PROJECT" == "new" ]; then
         case $TEMPLATE in
             "Tanstack start")
                 echo "[INFO] Creating a new Tanstack project in $PROJECT_DIR"
-                npm create @tanstack/start@latest -- $PROJECT_NAME --toolchain biome --tailwind --add-ons shadcn
+                npx @tanstack/cli create $PROJECT_NAME
                 cd "$PROJECT_DIR"
 
                 cat <<EOF > "$PROJECT_DIR/.env"
@@ -88,11 +88,19 @@ echo "[INFO] Using session name \"$SESSION\""
 
 if tmux has-session -t $SESSION 2>/dev/null; then
     echo "[INFO] Session already exists, attaching."
-    tmux a -t "$SESSION"
+    if [ -n "$TMUX" ]; then
+        tmux switch-client -t "$SESSION"
+    else
+        tmux a -t "$SESSION"
+    fi
     exit 0
 fi
 
 tmux new -d -s "$SESSION" -c "$PROJECT_DIR"
 tmux send-keys -t "$SESSION" "v ." ENTER
-tmux attach -t "$SESSION"
+if [ -n "$TMUX" ]; then
+    tmux switch-client -t "$SESSION"
+else
+    tmux attach -t "$SESSION"
+fi
 

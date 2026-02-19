@@ -8,6 +8,7 @@ fi
 
 link_file "$PROJECT_DIR/shell/.aliasses" "$HOME/.bash_aliases"
 link_file "$PROJECT_DIR/shell/ide.sh" "/usr/local/bin/ide"
+link_file "$PROJECT_DIR/shell/preview.sh" "/usr/local/bin/preview"
 link_file "$PROJECT_DIR/shell/.profile" "$HOME/.profile"
 link_file "$PROJECT_DIR/shell/ide_completion.sh" "/usr/share/bash-completion/completions/ide"
 

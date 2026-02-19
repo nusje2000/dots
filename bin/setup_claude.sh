@@ -31,6 +31,14 @@ if is_osx; then
     fi
 fi
 
+if ! command_exists agent-browser; then
+    loading "Installing agent-browser..."
+    npm install -g agent-browser
+    success "agent-browser has been installed"
+else
+    success "agent-browser has already been installed"
+fi
+
 link_file "$PROJECT_DIR/claude/settings.json" "$HOME/.claude/settings.json"
 link_file "$PROJECT_DIR/claude/global-claude.md" "$HOME/.claude/CLAUDE.md"
 
