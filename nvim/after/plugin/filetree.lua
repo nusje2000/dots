@@ -79,6 +79,16 @@ local copy_file_path = function()
     end
 end
 
+local preview_file = function()
+    -- Run the "preview" console commmand to open the file in the default application
+    -- Usage: preview <file_path>
+    local node = api.tree.get_node_under_cursor()
+    if node and node.absolute_path then
+        local file_path = node.absolute_path
+        vim.fn.system("preview " .. file_path)
+    end
+end
+
 require("nvim-tree").setup({
     renderer = {
         full_name = true,
@@ -118,6 +128,7 @@ require("nvim-tree").setup({
         vim.keymap.set('n', '<leader>s', grep_files_in_selected_dir,
             { buffer = bufnr, desc = "Grep in selected directory" })
         vim.keymap.set('n', '<leader>cp', copy_file_path, { buffer = bufnr, desc = "Copy the selected file path" })
+        vim.keymap.set('n', '<leader>o', preview_file, { buffer = bufnr, desc = "Preview file" })
     end,
 })
 

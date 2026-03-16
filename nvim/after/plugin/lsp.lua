@@ -42,14 +42,15 @@ lsp_zero.on_attach(function(_, bufnr)
     end
 
     map('n', 'gr', '<cmd>Telescope lsp_references<cr>', 'Show references')
-    map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', 'Go to definition')
-    map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', 'Go to declaration')
+    map('n', 'gd', '<cmd>Lspsaga goto_definition<cr>', 'Go to definition')
+    map('n', 'gD', '<cmd>Lspsaga goto_type_definition<cr>', 'Go to declaration')
     map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', 'Go to implementation')
     map('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', 'Go to type definition')
     map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', 'Go to reference')
     map('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', 'Rename symbol')
     map('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Execute code action')
     map('n', 'g?', '<cmd>lua vim.diagnostic.open_float()<cr>', 'Execute code action')
+    map('n', 'K', '<cmd>Lspsaga hover_doc<cr>')
     map('n', '<F3>', function()
         vim.lsp.buf.format({
             filter = function(client)
@@ -106,7 +107,7 @@ vim.lsp.config('csharp_ls', {
     root_markers = {'*.csproj'}
 })
 
-vim.keymap.set('n', '<C-Space>', vim.lsp.buf.code_action)
+vim.keymap.set('n', '<C-Space>', '<cmd>Lspsaga code_action<cr>')
 
 lsp_zero.set_sign_icons({
     error = '✘',

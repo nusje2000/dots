@@ -35,7 +35,6 @@
       "Bash(gh browse:*)",
       "mcp__context7",
       "mcp__playwright",
-      "mcp__chrome-dev-tools",
       "mcp__linear-server__get_issue",
       "mcp__linear-server__list_issues",
       "mcp__linear-server__list_issue_statuses",
@@ -91,6 +90,7 @@
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
     "feature-dev@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true
   }
 }

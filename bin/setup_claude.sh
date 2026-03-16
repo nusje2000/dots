@@ -70,3 +70,10 @@ else
     success "home-assistant MCP already exists in claude"
 fi
 
+if ! claude_mcp_exists "notion"; then
+    info "Adding notion MCP to claude..."
+    claude mcp add --scope user --transport http notion https://mcp.notion.com/mcp
+    success "Added context7 MCP to claude"
+else
+    success "context7 MCP already exists in claude"
+fi

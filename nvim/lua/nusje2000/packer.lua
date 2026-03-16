@@ -126,6 +126,28 @@ return require('packer').startup(function(use)
         "saadparwaiz1/cmp_luasnip"
     })
 
+    use({
+        'nvimdev/lspsaga.nvim',
+        after = 'nvim-lspconfig',
+        config = function()
+            require('lspsaga').setup({
+                lightbulb = {
+                    enable = false
+                },
+                ui = {
+                    border = 'rounded',
+                    code_action = ' ',
+                    devicon = false,
+                    kind = {},
+                },
+                code_action = {
+                    show_server_name = false,
+                    num_shortcut = true,
+                },
+            })
+        end,
+    })
+
     -- php debugger
     use('mfussenegger/nvim-dap')
     use('rcarriga/nvim-dap-ui')

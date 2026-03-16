@@ -127,3 +127,9 @@ autoload -Uz compinit && compinit
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Generate a unique id, e.g. A1B2C3 and export as AGENT_BROWSER_SESSION (if it does not already exist)
+if [ -z "$AGENT_BROWSER_SESSION" ]; then
+    export AGENT_BROWSER_SESSION=$(/usr/bin/uuidgen | tr -d '-' | head -c 6)
+fi
+

@@ -83,6 +83,7 @@ fi
 
 SESSION=$(basename "$PROJECT_DIR")
 SESSION=${SESSION//-/_}
+SESSION=${SESSION//./_}
 
 echo "[INFO] Using session name \"$SESSION\""
 
