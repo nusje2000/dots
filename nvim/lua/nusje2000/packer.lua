@@ -17,20 +17,9 @@ return require('packer').startup(function(use)
     })
 
     use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
-    use('nvim-treesitter/playground')
     use('tpope/vim-fugitive')
     use('mbbill/undotree')
     use('github/copilot.vim')
-    use {
-        "CopilotC-Nvim/CopilotChat.nvim",
-        dependencies = {
-            { "github/copilot.vim" },
-            { "nvim-lua/plenary.nvim", branch = "master" },
-        },
-        build = "make tiktoken",
-        opts = {
-        },
-    }
     use {
         'nvim-lualine/lualine.nvim',
         requires = { 'nvim-tree/nvim-web-devicons', opt = true }
@@ -64,32 +53,6 @@ return require('packer').startup(function(use)
                 },
             })
         end,
-    })
-    use({
-        "yetone/avante.nvim",
-        branch = 'main',
-        run = 'make',
-        config = function()
-            require('copilot').setup()
-            require('avante').setup({
-                instructions_file = "avante.md",
-                provider = "copilot",
-                providers = {
-                    copilot = {
-                          endpoint = "https://api.githubcopilot.com",
-                          model = "gpt-4o-2024-11-20",
-                    }
-                }
-            })
-        end,
-        requires = {
-            { "nvim-lua/plenary.nvim" },
-            { "MunifTanjim/nui.nvim" },
-            { 'hrsh7th/nvim-cmp' },
-            { "nvim-tree/nvim-web-devicons" },
-            { "MeanderingProgrammer/render-markdown.nvim" },
-            { "zbirenbaum/copilot.lua" }
-        }
     })
     use({
         "mason-org/mason-lspconfig.nvim",

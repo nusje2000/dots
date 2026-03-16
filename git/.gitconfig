@@ -1,5 +1,4 @@
 [core]
-        excludesfile = /Users/maartenn/.gitignore
         commentchar = ";"
 [user]
         email = maarten.nusteling@gmail.com

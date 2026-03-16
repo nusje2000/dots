@@ -3,6 +3,16 @@
 This repository contains dot files and setup scripts for setting up my
 development environment.
 
+## Dockerized IDE
+
+Run the full IDE environment (neovim, tmux, zsh) in Docker without installing anything locally:
+
+```bash
+wget -qO /tmp/ide.sh https://raw.githubusercontent.com/nusje2000/dots/main/bin/run_ide.sh && sh /tmp/ide.sh
+```
+
+This mounts the current directory into the container at `/ide`, shares the host's Docker daemon, and preserves your SSH keys.
+
 ## Updating
 
 To update an existing environment, `bin/update.sh` can be used. This
