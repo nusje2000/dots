@@ -15,6 +15,12 @@ if [ "$(id -u ide)" != "$HOST_UID" ]; then
     sed -i "s/^\(ide:[^:]*:\)[0-9]*:/\1${HOST_UID}:/" /etc/passwd
 fi
 
+# Install host CA certificates if mounted
+if [ -d /usr/local/share/host-ca-certificates ] && [ "$(ls -A /usr/local/share/host-ca-certificates)" ]; then
+    cp /usr/local/share/host-ca-certificates/* /usr/local/share/ca-certificates/
+    update-ca-certificates
+fi
+
 # Configure git user from environment variables
 gosu ide git config --global user.name "${GIT_USER_NAME:-Maarten Nusteling}"
 gosu ide git config --global user.email "${GIT_USER_EMAIL:-maarten.nusteling@gmail.com}"

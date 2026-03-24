@@ -26,12 +26,19 @@ if [ -n "$DISPLAY" ]; then
     X11_ARGS="-e DISPLAY=${DISPLAY} -v /tmp/.X11-unix:/tmp/.X11-unix"
 fi
 
+# Mount host CA certificates if custom ones exist
+CA_ARGS=""
+if [ -d /usr/local/share/ca-certificates ] && [ "$(ls -A /usr/local/share/ca-certificates 2>/dev/null)" ]; then
+    CA_ARGS="-v /usr/local/share/ca-certificates:/usr/local/share/host-ca-certificates:ro"
+fi
+
 echo "[ide] Starting IDE in $(pwd) (compose project: ${COMPOSE_PROJECT})..."
 echo "[ide] Git user: ${GIT_USER_NAME} <${GIT_USER_EMAIL}>"
 docker run -it --rm \
     -v "$(pwd):/ide" \
     -v "${HOME}/.ssh:/home/ide/.ssh:ro" \
     -v /var/run/docker.sock:/var/run/docker.sock \
+    $CA_ARGS \
     -e "HOST_UID=$(id -u)" \
     -e "HOST_GID=$(id -g)" \
     -e "COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT}" \
