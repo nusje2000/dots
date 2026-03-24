@@ -47,11 +47,13 @@ RUN install -m 0755 -d /etc/apt/keyrings \
     && apt-get update && apt-get install -y docker-ce-cli docker-compose-plugin \
     && rm -rf /var/lib/apt/lists/*
 
-# Install latest Neovim from GitHub releases
-RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz \
-    && tar -xzf nvim-linux-x86_64.tar.gz -C /opt \
-    && ln -s /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim \
-    && rm nvim-linux-x86_64.tar.gz
+# Install latest Neovim from GitHub releases (architecture-aware)
+ARG TARGETARCH
+RUN NVIM_ARCH=$([ "$TARGETARCH" = "arm64" ] && echo "aarch64" || echo "x86_64") \
+    && curl -LO "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-${NVIM_ARCH}.tar.gz" \
+    && tar -xzf "nvim-linux-${NVIM_ARCH}.tar.gz" -C /opt \
+    && ln -s "/opt/nvim-linux-${NVIM_ARCH}/bin/nvim" /usr/local/bin/nvim \
+    && rm "nvim-linux-${NVIM_ARCH}.tar.gz"
 
 # Create ide user with sudo access
 RUN useradd -m -s /bin/zsh ide \
