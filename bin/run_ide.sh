@@ -29,12 +29,12 @@ fi
 echo "[ide] Starting IDE in $(pwd) (compose project: ${COMPOSE_PROJECT})..."
 echo "[ide] Git user: ${GIT_USER_NAME} <${GIT_USER_EMAIL}>"
 docker run -it --rm \
-    -u "$(id -u):$(id -g)" \
     -v "$(pwd):/ide" \
     -v "${HOME}/.ssh:/home/ide/.ssh:ro" \
     -v /var/run/docker.sock:/var/run/docker.sock \
+    -e "HOST_UID=$(id -u)" \
+    -e "HOST_GID=$(id -g)" \
     -e "COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT}" \
-    -e "HOME=/home/ide" \
     -e "GIT_USER_NAME=${GIT_USER_NAME}" \
     -e "GIT_USER_EMAIL=${GIT_USER_EMAIL}" \
     $X11_ARGS \

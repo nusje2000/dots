@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y \
     gnupg \
     xclip \
     sudo \
+    gosu \
     locales \
     && rm -rf /var/lib/apt/lists/*
 
@@ -114,7 +115,11 @@ WORKDIR /ide
 ENV SHELL=/bin/zsh
 ENV TERM=xterm-256color
 
-COPY --chown=ide:ide docker/entrypoint.sh /home/ide/entrypoint.sh
-RUN chmod +x /home/ide/entrypoint.sh
+# Make home contents accessible to any UID (container-only, not a security concern)
+USER root
+RUN chmod -R a+rwX /home/ide
 
-ENTRYPOINT ["/home/ide/entrypoint.sh"]
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
