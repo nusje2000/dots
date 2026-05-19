@@ -10,8 +10,10 @@ brew_install_if_missing ansible
 brew_install_if_missing socat
 brew_install_if_missing jq
 brew_install_if_missing jless
+brew_install_if_missing fzf
 brew_install_if_missing gh
 brew_install_if_missing git-lfs
+brew_install_if_missing pngpaste
 
 brew_install_cask_if_missing raycast
 brew_install_cask_if_missing ngrok

@@ -61,7 +61,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/ccnotify/ccnotify.py UserPromptSubmit"
+            "command": "~/.claude/cc_hook.sh UserPromptSubmit"
           }
         ]
       }
@@ -71,7 +71,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/ccnotify/ccnotify.py Stop"
+            "command": "~/.claude/cc_hook.sh Stop"
           }
         ]
       }
@@ -81,7 +81,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/ccnotify/ccnotify.py Notification"
+            "command": "~/.claude/cc_hook.sh Notification"
           }
         ]
       }
