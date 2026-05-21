@@ -5,7 +5,9 @@
       "mcp__notion__notion-search",
       "mcp__notion__notion-fetch",
       "mcp__notion__notion-create-database",
-      "mcp__notion__notion-update-data-source"
+      "mcp__notion__notion-update-data-source",
+      "WebFetch(domain:www.reddit.com)",
+      "WebFetch(domain:old.reddit.com)"
     ]
   }
 }

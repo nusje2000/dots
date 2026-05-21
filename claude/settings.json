@@ -1,4 +1,7 @@
 {
+  "attribution": {
+    "commit": ""
+  },
   "permissions": {
     "allow": [
       "WebSearch(*)",
@@ -33,6 +36,36 @@
       "Bash(gh release view:*)",
       "Bash(gh search:*)",
       "Bash(gh browse:*)",
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git show:*)",
+      "Bash(git blame:*)",
+      "Bash(git branch --list:*)",
+      "Bash(git branch -a:*)",
+      "Bash(git branch -r:*)",
+      "Bash(git tag -l:*)",
+      "Bash(git tag --list:*)",
+      "Bash(git remote -v:*)",
+      "Bash(git remote show:*)",
+      "Bash(git stash list:*)",
+      "Bash(git shortlog:*)",
+      "Bash(git fetch:*)",
+      "Bash(git reflog:*)",
+      "Bash(git ls-files:*)",
+      "Bash(git ls-tree:*)",
+      "Bash(git ls-remote:*)",
+      "Bash(git cat-file:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(git rev-list:*)",
+      "Bash(git describe:*)",
+      "Bash(git config --list:*)",
+      "Bash(git config --get:*)",
+      "Bash(git name-rev:*)",
+      "Bash(git count-objects:*)",
+      "Bash(git verify-commit:*)",
+      "Bash(git verify-tag:*)",
+      "Bash(git for-each-ref:*)",
       "mcp__context7",
       "mcp__playwright",
       "mcp__linear-server__get_issue",
@@ -51,7 +84,30 @@
       "mcp__linear-server__list_users",
       "mcp__linear-server__get_user",
       "mcp__linear-server__list_cycles",
+      "mcp__linear-server__list_milestones",
       "mcp__linear-server__search_documentation",
+      "mcp__claude_ai_Linear__get_issue",
+      "mcp__claude_ai_Linear__list_issues",
+      "mcp__claude_ai_Linear__list_issue_statuses",
+      "mcp__claude_ai_Linear__get_issue_status",
+      "mcp__claude_ai_Linear__list_issue_labels",
+      "mcp__claude_ai_Linear__list_comments",
+      "mcp__claude_ai_Linear__get_project",
+      "mcp__claude_ai_Linear__list_projects",
+      "mcp__claude_ai_Linear__list_project_labels",
+      "mcp__claude_ai_Linear__get_document",
+      "mcp__claude_ai_Linear__list_documents",
+      "mcp__claude_ai_Linear__list_teams",
+      "mcp__claude_ai_Linear__get_team",
+      "mcp__claude_ai_Linear__list_users",
+      "mcp__claude_ai_Linear__get_user",
+      "mcp__claude_ai_Linear__list_cycles",
+      "mcp__claude_ai_Linear__list_milestones",
+      "mcp__claude_ai_Linear__search_documentation",
+      "Read(/tmp/**)",
+      "Read(~/projects/**)",
+      "Write(~/projects/**)",
+      "WebFetch(*)",
       "mcp__pencil"
     ]
   },
@@ -91,6 +147,20 @@
     "frontend-design@claude-plugins-official": true,
     "feature-dev@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "pr-review-toolkit@claude-plugins-official": true
-  }
+    "pr-review-toolkit@claude-plugins-official": true,
+    "impeccable@impeccable": true
+  },
+  "extraKnownMarketplaces": {
+    "impeccable": {
+      "source": {
+        "source": "github",
+        "repo": "pbakaus/impeccable"
+      }
+    }
+  },
+  "language": "English",
+  "effortLevel": "xhigh",
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true
 }
