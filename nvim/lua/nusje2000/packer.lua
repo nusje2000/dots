@@ -88,6 +88,17 @@ return require('packer').startup(function(use)
     use({
         "saadparwaiz1/cmp_luasnip"
     })
+    use({
+        "qvalentin/helm-ls.nvim",
+        ft = 'helm',
+        config = function()
+            require('helm-ls').setup({
+              conceal_templates = {
+                enabled = false,
+              }
+            })
+        end,
+    })
 
     use({
         'nvimdev/lspsaga.nvim',

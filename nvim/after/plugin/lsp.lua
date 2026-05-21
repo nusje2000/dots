@@ -99,8 +99,47 @@ vim.lsp.config('lua_ls', {
     }
 })
 
+vim.lsp.config('yamlls', {
+    settings = {
+        yaml = {
+            schemas = {
+                ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+                ["https://json.schemastore.org/github-action.json"] = "action.{yml,yaml}",
+                ["https://json.schemastore.org/kustomization.json"] = "kustomization.{yml,yaml}",
+                ["https://json.schemastore.org/helmfile.json"] = "helmfile.{yml,yaml}",
+                ["https://json.schemastore.org/chart.json"] = "Chart.{yml,yaml}",
+                ["https://json.schemastore.org/docker-compose.json"] = "docker-compose*.{yml,yaml}",
+                ["https://json.schemastore.org/dependabot-2.0.json"] = ".github/dependabot.{yml,yaml}",
+                ["https://json.schemastore.org/gitlab-ci.json"] = "*.gitlab-ci.{yml,yaml}",
+                kubernetes = {"k8s/apps/*.yml", "k8s/apps/*.yaml", "k8s/infra/*.yml", "k8s/infra/*.yaml", "k8s/**/templates/*.yml", "k8s/**/templates/*.yaml" },
+            },
+            schemaStore = {
+                enable = false,
+                url = "",
+            },
+            validate = true,
+            completion = true,
+            hover = true,
+        },
+    },
+})
+
+vim.lsp.config('helm-ls', {
+    settings = {
+        ['helm-ls'] = {
+            yamlls = {
+                path = "yaml-language-server",
+            }
+        }
+    },
+})
+
 vim.lsp.config('phpactor', {
     root_markers = {'composer.lock', '.git'}
+})
+
+vim.lsp.config('biome', {
+    cmd = { 'biome', 'lsp-proxy' },
 })
 
 vim.lsp.config('csharp_ls', {

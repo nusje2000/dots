@@ -79,6 +79,64 @@ local copy_file_path = function()
     end
 end
 
+local function clipboard_has_image()
+    local output = vim.fn.system("osascript -e 'clipboard info'")
+    return output:find("«class PNGf»") ~= nil or output:find("«class TIFF»") ~= nil
+end
+
+local function get_dir_for_node(node)
+    if node and node.type == "directory" then
+        return node.absolute_path
+    elseif node and node.absolute_path then
+        return vim.fn.fnamemodify(node.absolute_path, ":h")
+    end
+    return nil
+end
+
+local paste_image_from_clipboard = function()
+    local node = api.tree.get_node_under_cursor()
+    local dir = get_dir_for_node(node)
+    if not dir then return end
+
+    if not clipboard_has_image() then
+        api.fs.paste()
+        return
+    end
+
+    if vim.fn.executable("pngpaste") ~= 1 then
+        vim.notify("pngpaste is required: brew install pngpaste", vim.log.levels.ERROR)
+        return
+    end
+
+    vim.ui.select({ "Paste image from clipboard", "Paste file (default)" }, {
+        prompt = "Clipboard contains an image:",
+    }, function(choice)
+        if not choice then return end
+
+        if choice:find("default") then
+            api.fs.paste()
+            return
+        end
+
+        vim.ui.input({ prompt = "Image filename: ", default = "image.png" }, function(filename)
+            if not filename or filename == "" then return end
+
+            if not filename:match("%.%w+$") then
+                filename = filename .. ".png"
+            end
+
+            local filepath = dir .. "/" .. filename
+            local result = vim.fn.system({ "pngpaste", filepath })
+            if vim.v.shell_error ~= 0 then
+                vim.notify("Failed to paste image: " .. result, vim.log.levels.ERROR)
+            else
+                vim.notify("Saved image to " .. filepath)
+                api.tree.reload()
+            end
+        end)
+    end)
+end
+
 local preview_file = function()
     -- Run the "preview" console commmand to open the file in the default application
     -- Usage: preview <file_path>
@@ -129,6 +187,7 @@ require("nvim-tree").setup({
             { buffer = bufnr, desc = "Grep in selected directory" })
         vim.keymap.set('n', '<leader>cp', copy_file_path, { buffer = bufnr, desc = "Copy the selected file path" })
         vim.keymap.set('n', '<leader>o', preview_file, { buffer = bufnr, desc = "Preview file" })
+        vim.keymap.set('n', 'p', paste_image_from_clipboard, { buffer = bufnr, desc = "Paste (with image support)" })
     end,
 })
 
