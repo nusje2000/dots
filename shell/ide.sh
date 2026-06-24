@@ -3,7 +3,17 @@
 set -e
 
 PROJECTS_DIR=$HOME/projects
-PROJECT="${1:-.}"
+
+if [ -z "$1" ]; then
+    PROJECT=$(find "$PROJECTS_DIR" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort | fzf --prompt="Select a project: ")
+
+    if [ -z "$PROJECT" ]; then
+        echo "[INFO] No project selected."
+        exit 0
+    fi
+else
+    PROJECT="$1"
+fi
 
 if [ "$PROJECT" == "new" ]; then
     echo "[INFO] Creating a new project."

@@ -106,11 +106,13 @@
       "mcp__claude_ai_Linear__search_documentation",
       "Read(/tmp/**)",
       "Read(~/projects/**)",
-      "Write(~/projects/**)",
+      "Edit(~/projects/**)",
       "WebFetch(*)",
       "mcp__pencil"
-    ]
+    ],
+    "defaultMode": "auto"
   },
+  "model": "opus[1m]",
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -141,6 +143,26 @@
           }
         ]
       }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/cc_hook.sh SessionEnd"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/cc_hook.sh PostToolUse"
+          }
+        ]
+      }
     ]
   },
   "enabledPlugins": {
@@ -148,7 +170,10 @@
     "feature-dev@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
     "pr-review-toolkit@claude-plugins-official": true,
-    "impeccable@impeccable": true
+    "impeccable@impeccable": true,
+    "figma@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "i-have-adhd@i-have-adhd": true
   },
   "extraKnownMarketplaces": {
     "impeccable": {
@@ -156,10 +181,17 @@
         "source": "github",
         "repo": "pbakaus/impeccable"
       }
+    },
+    "i-have-adhd": {
+      "source": {
+        "source": "github",
+        "repo": "ayghri/i-have-adhd"
+      }
     }
   },
   "language": "English",
-  "effortLevel": "xhigh",
+  "effortLevel": "high",
+  "tui": "default",
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true

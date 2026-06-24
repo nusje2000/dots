@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "checkJs": false,
+    "module": "esnext",
+    "target": "esnext"
+  },
+  "include": ["**/*"],
+  "exclude": ["node_modules", "dist", "build", ".git"]
+}

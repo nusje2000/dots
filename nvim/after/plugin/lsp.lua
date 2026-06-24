@@ -146,7 +146,7 @@ vim.lsp.config('csharp_ls', {
     root_markers = {'*.csproj'}
 })
 
-vim.keymap.set('n', '<C-Space>', '<cmd>Lspsaga code_action<cr>')
+vim.keymap.set('n', '<C-Space>', vim.lsp.buf.code_action)
 
 lsp_zero.set_sign_icons({
     error = '✘',

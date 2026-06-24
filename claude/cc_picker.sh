@@ -32,6 +32,12 @@ if ! command -v fzf >/dev/null 2>&1; then
 fi
 
 live_panes=" $(tmux list-panes -a -F '#{pane_id}' 2>/dev/null | tr '\n' ' ')"
+# Restricted to Claude-looking processes so a recycled pid can't resurrect a
+# dead session.
+live_claude_pids=" $(ps -eo pid=,comm= 2>/dev/null \
+    | awk '{ n = split($2, path, "/"); base = path[n];
+             if (base == "claude" || base == "node" || base == "bun") print $1 }' \
+    | tr '\n' ' ')"
 now_epoch=$(date -u +%s)
 
 epoch_of() {
@@ -62,10 +68,27 @@ for f in "${files[@]}"; do
     pidx=$(   jq -r '.tmux_pane_index // empty' <<<"$data" 2>/dev/null)
     updated=$(jq -r '.updated_at // empty'      <<<"$data" 2>/dev/null)
     prompt=$( jq -r '.last_prompt // empty'     <<<"$data" 2>/dev/null)
+    cpid=$(   jq -r '.claude_pid // empty'      <<<"$data" 2>/dev/null)
 
     if [ -z "$pane_id" ] || [[ "$live_panes" != *" $pane_id "* ]]; then
         rm -f "$f"
         continue
+    fi
+
+    if [ -n "$cpid" ] && [[ "$live_claude_pids" != *" $cpid "* ]]; then
+        rm -f "$f"
+        continue
+    fi
+
+    # Interrupting a turn fires no hook at all, so a "running" entry outlives the
+    # work it describes. The pane's own indicator is the only signal that says
+    # whether Claude is still busy right now.
+    if [ "$state" = "running" ] || [ "$state" = "waiting" ]; then
+        if tmux capture-pane -p -t "$pane_id" 2>/dev/null | grep -qi 'esc to interrupt'; then
+            state="running"
+        elif [ "$state" = "running" ]; then
+            state="idle"
+        fi
     fi
 
     project=$(basename "${cwd:-?}")

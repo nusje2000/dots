@@ -13,6 +13,12 @@ files=("$session_dir"/*.json)
 [ ${#files[@]} -eq 0 ] && exit 0
 
 live_panes=" $(tmux list-panes -a -F '#{pane_id}' 2>/dev/null | tr '\n' ' ')"
+# Restricted to Claude-looking processes so a recycled pid can't resurrect a
+# dead session.
+live_claude_pids=" $(ps -eo pid=,comm= 2>/dev/null \
+    | awk '{ n = split($2, path, "/"); base = path[n];
+             if (base == "claude" || base == "node" || base == "bun") print $1 }' \
+    | tr '\n' ' ')"
 
 running=0; waiting=0; idle=0
 for f in "${files[@]}"; do
@@ -21,7 +27,24 @@ for f in "${files[@]}"; do
         rm -f "$f"
         continue
     fi
+    claude_pid=$(grep -oE '"claude_pid"[[:space:]]*:[[:space:]]*"[^"]*"' "$f" 2>/dev/null | head -1 | sed -E 's/.*"([^"]*)"$/\1/')
+    if [ -n "$claude_pid" ] && [[ "$live_claude_pids" != *" $claude_pid "* ]]; then
+        rm -f "$f"
+        continue
+    fi
     state=$(grep -oE '"state"[[:space:]]*:[[:space:]]*"[^"]*"' "$f" 2>/dev/null | head -1 | sed -E 's/.*"([^"]*)"$/\1/')
+
+    # Interrupting a turn fires no hook at all, so a "running" entry outlives the
+    # work it describes. The pane's own indicator is the only signal that says
+    # whether Claude is still busy right now.
+    if [ "$state" = "running" ] || [ "$state" = "waiting" ]; then
+        if tmux capture-pane -p -t "$pane_id" 2>/dev/null | grep -qi 'esc to interrupt'; then
+            state="running"
+        elif [ "$state" = "running" ]; then
+            state="idle"
+        fi
+    fi
+
     case "$state" in
         running) running=$((running+1));;
         waiting) waiting=$((waiting+1));;

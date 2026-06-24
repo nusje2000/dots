@@ -22,8 +22,46 @@ session_dir="$HOME/.claude/cc_state"
 mkdir -p "$session_dir"
 state_file="$session_dir/$session_id.json"
 
+if [ "$event" = "SessionEnd" ]; then
+    rm -f "$state_file"
+    tmux refresh-client -S 2>/dev/null
+    exit 0
+fi
+
 now=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+
+# Approving a permission prompt fires no hook of its own, so a tool running is
+# the only signal that a "waiting" session is working again. This fires on every
+# tool call — keep the already-correct path to a single grep.
+if [ "$event" = "PostToolUse" ] && [ -f "$state_file" ]; then
+    if grep -q '"state"[[:space:]]*:[[:space:]]*"waiting"' "$state_file" 2>/dev/null; then
+        jq -c --arg now "$now" '.state = "running" | .updated_at = $now' \
+            "$state_file" > "$state_file.tmp" 2>/dev/null \
+            && mv "$state_file.tmp" "$state_file"
+        tmux refresh-client -S 2>/dev/null
+    fi
+    exit 0
+fi
+# A PostToolUse with no state file means the entry was dropped while the session
+# was still alive; fall through to rebuild it rather than stay invisible until
+# the next prompt.
+
 cwd=$(jq -r '.cwd // empty' <<<"$input" 2>/dev/null)
+
+# Hooks run in a shell spawned by Claude, and neither the payload nor the
+# environment exposes Claude's pid — walk up the ancestors to find it. Consumers
+# use it to drop sessions that died without firing SessionEnd.
+claude_pid=""
+walk_pid=$PPID
+for _ in 1 2 3 4 5 6 7 8; do
+    [ -z "$walk_pid" ] && break
+    [ "$walk_pid" -le 1 ] 2>/dev/null && break
+    walk_comm=$(ps -o comm= -p "$walk_pid" 2>/dev/null)
+    case "${walk_comm##*/}" in
+        claude|node|bun) claude_pid="$walk_pid"; break;;
+    esac
+    walk_pid=$(ps -o ppid= -p "$walk_pid" 2>/dev/null | tr -d ' ')
+done
 
 tmux_session=""; tmux_window=""; tmux_pane_index=""; tmux_pane_id=""
 if [ -n "${TMUX:-}" ] && [ -n "${TMUX_PANE:-}" ]; then
@@ -57,7 +95,7 @@ human_duration() {
 notify() {
     local title="$1" subtitle="$2"
     command -v terminal-notifier >/dev/null 2>&1 || return 0
-    terminal-notifier -sound default -title "$title" -subtitle "$subtitle" \
+    terminal-notifier -title "$title" -subtitle "$subtitle" \
         >/dev/null 2>&1 &
 }
 
@@ -92,6 +130,9 @@ state=""; new_started=""; new_prompt=""
 notif_title=""; notif_subtitle=""; notif_kind=""
 
 case "$event" in
+    PostToolUse)
+        state="running"
+        ;;
     UserPromptSubmit)
         state="running"
         new_started="$now"
@@ -151,6 +192,7 @@ jq -c -n \
     --arg tmux_window  "$tmux_window" \
     --arg tmux_pane_index "$tmux_pane_index" \
     --arg tmux_pane_id "$tmux_pane_id" \
+    --arg claude_pid   "$claude_pid" \
     --arg now          "$now" \
     --arg new_started  "$new_started" \
     --arg new_prompt   "$new_prompt" \
@@ -164,6 +206,7 @@ jq -c -n \
         tmux_window:     (if $tmux_window     == "" then ($e.tmux_window     // "") else $tmux_window end),
         tmux_pane_index: (if $tmux_pane_index == "" then ($e.tmux_pane_index // "") else $tmux_pane_index end),
         tmux_pane_id:    (if $tmux_pane_id    == "" then ($e.tmux_pane_id    // "") else $tmux_pane_id end),
+        claude_pid:      (if $claude_pid      == "" then ($e.claude_pid      // "") else $claude_pid end),
         started_at:      (if $new_started == "" then ($e.started_at // $now) else $new_started end),
         updated_at:      $now,
         last_prompt:     (if $new_prompt  == "" then ($e.last_prompt // "") else $new_prompt end)

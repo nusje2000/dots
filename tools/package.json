@@ -1,0 +1,14 @@
+{
+  "name": "tmux-tools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bun-powered tmux popups: session switcher and PR/issue dashboard.",
+  "type": "module",
+  "scripts": {
+    "session-switcher": "bun src/session-switcher.ts",
+    "dashboard": "bun src/dashboard.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.14"
+  }
+}
